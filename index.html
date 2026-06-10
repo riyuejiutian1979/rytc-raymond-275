@@ -1,112 +1,711 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RYTC 管理员控制台</title>
-    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', system-ui; background: #0a0f1e; color: #eef; padding: 20px; }
-        .container { max-width: 1400px; margin: 0 auto; }
-        h1 { margin-bottom: 20px; border-left: 4px solid #2a6df4; padding-left: 16px; }
-        .card { background: #141b2b; border-radius: 24px; padding: 20px; margin-bottom: 20px; border: 1px solid #2a3a5a; }
-        .card h2 { margin-bottom: 16px; color: #7aa9ff; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
-        button { background: #2a6df4; border: none; color: white; padding: 8px 16px; border-radius: 40px; cursor: pointer; margin-top: 8px; }
-        input, select { background: #0f1622; border: 1px solid #2a3a5a; color: #eef; padding: 8px 12px; border-radius: 40px; width: 100%; margin: 8px 0; }
-        .flex { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-        .status { background: #0f1622; border-radius: 20px; padding: 12px; font-family: monospace; margin-bottom: 16px; }
-        hr { margin: 12px 0; border-color: #2a3a5a; }
+    <title>RAYC Global Ecology Token - Official White Paper</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/v4-shims.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cyber-cyan': '#00F5FF',
+                        'cyber-purple': '#7928CA',
+                        'dark-bg': '#0A0A1A',
+                        'card-bg': 'rgba(255, 255, 255, 0.05)',
+                        'border-glow': 'rgba(0, 245, 255, 0.2)',
+                    },
+                    fontFamily: {
+                        'orbitron': ['Orbitron', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-gradient {
+                background: linear-gradient(135deg, #00F5FF, #7928CA);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .bg-glass {
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(10px);
+            }
+            .border-glow {
+                border: 1px solid rgba(0, 245, 255, 0.2);
+                box-shadow: 0 0 20px rgba(0, 245, 255, 0.1);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(0, 245, 255, 0.2); }
+            to { box-shadow: 0 0 30px rgba(0, 245, 255, 0.4), 0 0 40px rgba(121, 40, 202, 0.2); }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(121, 40, 202, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 245, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 0, 150, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: backgroundShift 20s ease-in-out infinite alternate;
+        }
+        
+        @keyframes backgroundShift {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.1) translate(10px, -10px); }
+        }
+        
+        .section-fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .section-fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
-<body>
-<div class="container">
-    <h1>🔐 RYTC 管理员控制台</h1>
-    <div class="card">
-        <button id="connectBtn">连接 MetaMask</button>
-        <div id="walletStatus" class="status"></div>
-        <div id="ownerCheck" style="color:#ffaa66;"></div>
-    </div>
-    <div id="adminPanel" style="display:none;">
-        <!-- 通用转账 -->
-        <div class="card"><h2>💰 代币转账</h2><div class="flex"><input type="text" id="transferTo" placeholder="接收地址" style="flex:2;"><input type="number" id="transferAmount" placeholder="数量 (RYTC)" step="any" style="flex:1;"><button id="doTransfer">转账</button></div></div>
-        <div class="grid">
-            <!-- IDO 管理 -->
-            <div class="card"><h2>📊 IDO 合约</h2><div>地址: <span id="idoAddr"></span></div><hr><div>开始时间戳: <input type="number" id="idoStart"></div><div>结束时间戳: <input type="number" id="idoEnd"></div><button id="setTimeBtn">修改时间</button><hr><div>比例 (1 USDT = ? RYTC): <input type="number" id="idoRate"></div><button id="setRateBtn">修改比例</button><hr><div>存入 RYTC: <input type="number" id="idoDepositAmount"></div><button id="idoDepositBtn">存入</button><hr><button id="idoWithdrawBtn">提取剩余</button></div>
-            <!-- 挖矿管理 -->
-            <div class="card"><h2>⛏️ 挖矿合约</h2><div>地址: <span id="miningAddr"></span></div><hr><div>矿机类型ID: <input type="number" id="minerTypeId" placeholder="0~6"></div><div>启用/禁用: <select id="minerEnabled"><option value="true">启用</option><option value="false">禁用</option></select></div><button id="updateMinerStatusBtn">修改状态</button><hr><div>每日领取上限: <input type="number" id="maxClaimTimes"></div><button id="setMaxClaimBtn">修改</button><hr><div>转入奖励池: <input type="number" id="miningFundAmount"></div><button id="fundMiningBtn">转入</button></div>
-            <!-- 团队管理 -->
-            <div class="card"><h2>👥 团队合约</h2><div>地址: <span id="teamAddr"></span></div><hr><div>级别 (T1~T7): <select id="levelIndex"><option value="1">T1</option><option value="2">T2</option><option value="3">T3</option><option value="4">T4</option><option value="5">T5</option><option value="6">T6</option><option value="7">T7</option></select></div><div>奖励比例 (基点): <input type="number" id="newRate" placeholder="1000=10%"></div><button id="setLevelRateBtn">修改比例</button><hr><div>转入奖励池: <input type="number" id="teamFundAmount"></div><button id="fundTeamBtn">转入</button></div>
-            <!-- 公会管理（完整） -->
-            <div class="card"><h2>🏛️ 公会合约</h2><div>地址: <span id="guildAddr"></span></div><hr><div>公会 ID (1-200): <input type="number" id="guildId" placeholder="公会ID"></div>
-                <div>设置会长: <input type="text" id="newOwner" placeholder="新会长地址"></div><button id="changeGuildOwnerBtn">更换会长</button><hr>
-                <div>设置质押总额 (RYTC): <input type="number" id="guildStake" placeholder="质押额"></div><button id="setGuildStakeBtn">设置质押额</button><hr>
-                <div>开关公会: <select id="guildActive"><option value="true">激活</option><option value="false">关闭</option></select></div><button id="setGuildActiveBtn">修改状态</button><hr>
-                <div>分红比例 (基点, 100=1%): <input type="number" id="dividendRate" placeholder="当前值"></div><button id="setDividendRateBtn">修改比例</button><hr>
-                <div>转入分红池: <input type="number" id="guildFundAmount"></div><button id="fundGuildBtn">转入</button>
+<body class="bg-dark-bg text-white font-roboto">
+    <div class="background-animation"></div>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="text-center z-10 px-4">
+            <h1 class="text-6xl md:text-8xl font-orbitron font-black text-gradient mb-6 animate-slide-up">
+                RAYC
+            </h1>
+            <h2 class="text-2xl md:text-4xl font-orbitron text-cyber-cyan mb-8 animate-slide-up" style="animation-delay: 0.2s;">
+                GLOBAL ECOLOGY TOKEN
+            </h2>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto animate-slide-up" style="animation-delay: 0.4s;">
+                Official White Paper | 2026
+            </p>
+            <div class="mt-12 animate-slide-up" style="animation-delay: 0.6s;">
+                <a href="#disclaimer" class="bg-cyber-cyan text-dark-bg px-8 py-4 rounded-full font-orbitron font-bold text-lg hover:bg-cyan-400 transition-all duration-300 animate-glow">
+                    <i class="fas fa-arrow-down mr-2"></i>
+                    EXPLORE
+                </a>
             </div>
         </div>
-    </div>
-</div>
-<script>
-    const CONFIG = {
-        token: "0xfab2Cc41282E20f98d1470802Ac51450EB8E9906", ido: "0xf712A963E1628C70f1Cb5Ac2b0fe388d665A7588",
-        mining: "0x737E07277CcFF609EC3Ff9FabE5AD2Ab509D97F5", team: "0xF11Da2FAa09aB297A08a5833D5A3ec7A35326983",
-        guild: "0x8EC9689CF57F83e5Eece439bD34F0f7010DA3a77", usdt: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
-    };
-    const MAX_UINT256 = "115792089237316195423570985008687907853269984665640564039457584007913129639935";
-    const TOKEN_ABI = ["function transfer(address,uint256) returns (bool)","function decimals() view returns (uint8)","function approve(address,uint256) returns (bool)","function balanceOf(address) view returns (uint256)"];
-    const IDO_ABI = ["function owner() view returns (address)","function setTime(uint256,uint256)","function setRate(uint256)","function depositTokens(uint256)","function withdrawRemainingTokens()"];
-    const MINING_ABI = ["function owner() view returns (address)","function updateMinerType(uint256,uint32,uint256,uint256,uint256,uint256,uint256,bool)","function setMaxDailyClaimTimes(uint256)","function minerTypes(uint256) view returns (uint32,uint256,uint256,uint256,uint256,uint256,uint256,bool)"];
-    const TEAM_ABI = ["function owner() view returns (address)","function setLevelRewardRate(uint256,uint256)","function depositRewardTokens(uint256)"];
-    const GUILD_ABI = ["function owner() view returns (address)","function setGuildStake(uint256,uint256)","function changeGuildOwner(uint256,address)","function setGuildActive(uint256,bool)","function setDividendRate(uint256)","function depositRewardTokens(uint256)"];
-    let provider, signer, userAddress, tokenContract, idoContract, miningContract, teamContract, guildContract;
-    document.getElementById('connectBtn').onclick = async ()=>{
-        if(!window.ethereum) return alert('安装MetaMask');
-        await window.ethereum.request({method:'eth_requestAccounts'});
-        provider = new ethers.providers.Web3Provider(window.ethereum);
-        signer = provider.getSigner(); userAddress = await signer.getAddress();
-        document.getElementById('walletStatus').innerHTML = `连接地址: ${userAddress}`;
-        tokenContract = new ethers.Contract(CONFIG.token, TOKEN_ABI, signer);
-        idoContract = new ethers.Contract(CONFIG.ido, IDO_ABI, signer);
-        miningContract = new ethers.Contract(CONFIG.mining, MINING_ABI, signer);
-        teamContract = new ethers.Contract(CONFIG.team, TEAM_ABI, signer);
-        guildContract = new ethers.Contract(CONFIG.guild, GUILD_ABI, signer);
-        let idoOwner = await idoContract.owner();
-        if(idoOwner.toLowerCase() === userAddress.toLowerCase()){
-            document.getElementById('ownerCheck').innerHTML = '✅ 管理员权限已解锁';
-            document.getElementById('adminPanel').style.display = 'block';
-            document.getElementById('idoAddr').innerText = CONFIG.ido;
-            document.getElementById('miningAddr').innerText = CONFIG.mining;
-            document.getElementById('teamAddr').innerText = CONFIG.team;
-            document.getElementById('guildAddr').innerText = CONFIG.guild;
-        } else { document.getElementById('ownerCheck').innerHTML = '⛔ 你不是合约所有者'; }
-    };
-    document.getElementById('doTransfer').onclick = async ()=>{
-        let to = document.getElementById('transferTo').value.trim();
-        let amount = parseFloat(document.getElementById('transferAmount').value);
-        if(!to||!amount) return alert('填写完整');
-        let decimals = await tokenContract.decimals();
-        let amountWei = ethers.utils.parseUnits(amount.toString(), decimals);
-        let tx = await tokenContract.transfer(to, amountWei);
-        await tx.wait(); alert('转账成功');
-    };
-    document.getElementById('setTimeBtn').onclick = async ()=>{ let s=document.getElementById('idoStart').value, e=document.getElementById('idoEnd').value; if(!s||!e) return; let tx=await idoContract.setTime(s,e); await tx.wait(); alert('成功'); };
-    document.getElementById('setRateBtn').onclick = async ()=>{ let r=document.getElementById('idoRate').value; if(!r) return; let tx=await idoContract.setRate(r); await tx.wait(); alert('成功'); };
-    document.getElementById('idoDepositBtn').onclick = async ()=>{ let a=parseFloat(document.getElementById('idoDepositAmount').value); if(!a) return; let decimals=await tokenContract.decimals(); let wei=ethers.utils.parseUnits(a.toString(), decimals); let approve=await tokenContract.approve(CONFIG.ido, wei); await approve.wait(); let tx=await idoContract.depositTokens(wei); await tx.wait(); alert('存入成功'); };
-    document.getElementById('idoWithdrawBtn').onclick = async ()=>{ if(confirm('提取剩余代币？')){ let tx=await idoContract.withdrawRemainingTokens(); await tx.wait(); alert('提取成功'); } };
-    document.getElementById('updateMinerStatusBtn').onclick = async ()=>{ let id=parseInt(document.getElementById('minerTypeId').value); let enabled=document.getElementById('minerEnabled').value==='true'; let mt=await miningContract.minerTypes(id); let tx=await miningContract.updateMinerType(id, mt[0], mt[1], mt[2], mt[3], mt[4], mt[5], enabled); await tx.wait(); alert('成功'); };
-    document.getElementById('setMaxClaimBtn').onclick = async ()=>{ let max=parseInt(document.getElementById('maxClaimTimes').value); if(!max) return; let tx=await miningContract.setMaxDailyClaimTimes(max); await tx.wait(); alert('成功'); };
-    document.getElementById('fundMiningBtn').onclick = async ()=>{ let a=parseFloat(document.getElementById('miningFundAmount').value); if(!a) return; let decimals=await tokenContract.decimals(); let wei=ethers.utils.parseUnits(a.toString(), decimals); let tx=await tokenContract.transfer(CONFIG.mining, wei); await tx.wait(); alert('转入成功'); };
-    document.getElementById('setLevelRateBtn').onclick = async ()=>{ let idx=parseInt(document.getElementById('levelIndex').value); let rate=parseInt(document.getElementById('newRate').value); if(!rate) return; let tx=await teamContract.setLevelRewardRate(idx, rate); await tx.wait(); alert('成功'); };
-    document.getElementById('fundTeamBtn').onclick = async ()=>{ let a=parseFloat(document.getElementById('teamFundAmount').value); if(!a) return; let decimals=await tokenContract.decimals(); let wei=ethers.utils.parseUnits(a.toString(), decimals); let tx=await tokenContract.transfer(CONFIG.team, wei); await tx.wait(); alert('转入成功'); };
-    // 公会管理
-    document.getElementById('changeGuildOwnerBtn').onclick = async ()=>{ let gid=parseInt(document.getElementById('guildId').value); let newOwner=document.getElementById('newOwner').value.trim(); if(!gid||!newOwner) return alert('填写公会ID和会长地址'); let tx=await guildContract.changeGuildOwner(gid, newOwner); await tx.wait(); alert('会长更换成功'); };
-    document.getElementById('setGuildStakeBtn').onclick = async ()=>{ let gid=parseInt(document.getElementById('guildId').value); let stake=parseFloat(document.getElementById('guildStake').value); if(!gid||isNaN(stake)) return; let decimals=await tokenContract.decimals(); let stakeWei=ethers.utils.parseUnits(stake.toString(), decimals); let tx=await guildContract.setGuildStake(gid, stakeWei); await tx.wait(); alert('质押额设置成功'); };
-    document.getElementById('setGuildActiveBtn').onclick = async ()=>{ let gid=parseInt(document.getElementById('guildId').value); let active=document.getElementById('guildActive').value==='true'; let tx=await guildContract.setGuildActive(gid, active); await tx.wait(); alert('状态修改成功'); };
-    document.getElementById('setDividendRateBtn').onclick = async ()=>{ let rate=parseInt(document.getElementById('dividendRate').value); if(!rate) return; let tx=await guildContract.setDividendRate(rate); await tx.wait(); alert('分红比例修改成功'); };
-    document.getElementById('fundGuildBtn').onclick = async ()=>{ let a=parseFloat(document.getElementById('guildFundAmount').value); if(!a) return; let decimals=await tokenContract.decimals(); let wei=ethers.utils.parseUnits(a.toString(), decimals); let tx=await tokenContract.transfer(CONFIG.guild, wei); await tx.wait(); alert('转入公会合约成功'); };
-</script>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-20 left-10 w-32 h-32 bg-cyber-purple/20 rounded-full blur-xl animate-float"></div>
+        <div class="absolute bottom-20 right-10 w-24 h-24 bg-cyber-cyan/20 rounded-full blur-xl animate-float" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/4 w-16 h-16 bg-cyber-purple/30 rounded-full blur-lg animate-float" style="animation-delay: 4s;"></div>
+    </section>
+
+    <!-- Disclaimer Section -->
+    <section id="disclaimer" class="py-20 relative">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="bg-glass border-glow rounded-2xl p-8 mb-12 section-fade-in">
+                <h2 class="text-3xl font-orbitron text-cyber-cyan mb-6 flex items-center">
+                    <i class="fas fa-exclamation-triangle mr-4"></i>
+                    DISCLAIMER
+                </h2>
+                <div class="text-gray-300 space-y-4">
+                    <p>This white paper is for global overseas users only.</p>
+                    <p>The project does not promote or conduct any business within mainland China, and does not constitute any investment advice.</p>
+                    <p>The project abides by the regulatory rules of Singapore MAS, Dubai VASP and global Web3 compliance standards.</p>
+                    <p class="font-bold text-cyber-cyan">Digital assets carry market risks, and all participants shall bear their own risks.</p>
+                </div>
+            </div>
+
+            <!-- Table of Contents -->
+            <div class="bg-glass border-glow rounded-2xl p-8 section-fade-in">
+                <h2 class="text-3xl font-orbitron text-cyber-cyan mb-6">CONTENTS</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <a href="#overview" class="block text-gray-300 hover:text-cyber-cyan transition-colors">
+                            <span class="text-cyber-cyan font-orbitron mr-3">01</span>Project Overview
+                        </a>
+                        <a href="#background" class="block text-gray-300 hover:text-cyber-cyan transition-colors">
+                            <span class="text-cyber-cyan font-orbitron mr-3">02</span>Corporate & Technical Background
+                        </a>
+                        <a href="#tokenomics" class="block text-gray-300 hover:text-cyber-cyan transition-colors">
+                            <span class="text-cyber-cyan font-orbitron mr-3">03</span>Token Economics
+                        </a>
+                        <a href="#defi-ecology" class="block text-gray-300 hover:text-cyber-cyan transition-colors">
+                            <span class="text-cyber-cyan font-orbitron mr-3">04</span>On-Chain DeFi Core Ecology
+                        </a>
+                    </div>
+                    <div class="space-y-4">
+                        <a href="#real-economy" class="block text-gray-300 hover:text-cyber-cyan transition-colors">
+                            <span class="text-cyber-cyan font-orbitron mr-3">05</span>Global Real Economy Application Scenarios
+                        </a>
+                        <a href="#architecture" class="block text-gray-300 hover:text-cyber-cyan transition-colors">
+                            <span class="text-cyber-cyan font-orbitron mr-3">06</span>Dual-Server & Dual-Domain DApp Architecture
+                        </a>
+                        <a href="#roadmap" class="block text-gray-300 hover:text-cyber-cyan transition-colors">
+                            <span class="text-cyber-cyan font-orbitron mr-3">07</span>Roadmap
+                        </a>
+                        <a href="#summary" class="block text-gray-300 hover:text-cyber-cyan transition-colors">
+                            <span class="text-cyber-cyan font-orbitron mr-3">08</span>Project Summary
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Overview -->
+    <section id="overview" class="py-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="section-fade-in">
+                <h2 class="text-4xl font-orbitron text-cyber-cyan mb-8 flex items-center">
+                    <span class="text-6xl mr-4 opacity-50">01</span>Project Overview
+                </h2>
+                <div class="bg-glass border-glow rounded-2xl p-8">
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        RAYC is a decentralized ecological token developed by BlockTech Global Singapore team based on Polygon (Ethereum Layer2).
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-8 mb-6">
+                        <div class="text-center p-6 bg-card-bg rounded-xl">
+                            <i class="fas fa-link text-4xl text-cyber-cyan mb-4"></i>
+                            <h3 class="text-xl font-orbitron text-white mb-2">Dual Closed-Loop System</h3>
+                            <p class="text-gray-400">On-chain DeFi financial ecology + Global physical commercial payment</p>
+                        </div>
+                        <div class="text-center p-6 bg-card-bg rounded-xl">
+                            <i class="fas fa-globe text-4xl text-cyber-purple mb-4"></i>
+                            <h3 class="text-xl font-orbitron text-white mb-2">Real Economy Implementation</h3>
+                            <p class="text-gray-400">Deeply implemented in global real economy scenarios, realizing sustainable and valuable global Web3 business ecology.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Corporate & Technical Background -->
+    <section id="background" class="py-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="section-fade-in">
+                <h2 class="text-4xl font-orbitron text-cyber-cyan mb-8 flex items-center">
+                    <span class="text-6xl mr-4 opacity-50">02</span>Corporate & Technical Background
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Operating Company -->
+                    <div class="bg-glass border-glow rounded-2xl p-8">
+                        <h3 class="text-2xl font-orbitron text-white mb-6">2.1 Operating Company</h3>
+                        <h4 class="text-xl font-orbitron text-cyber-cyan mb-4">BlockTech Global Pte. Ltd. (Singapore)</h4>
+                        <ul class="text-gray-300 space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-cyber-cyan mr-3 mt-1"></i>
+                                Founded in 2018, focus on underlying blockchain development, smart contract audit, real economy blockchain transformation
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-certificate text-cyber-cyan mr-3 mt-1"></i>
+                                Licensed by Singapore MAS and Dubai VASP
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-users text-cyber-cyan mr-3 mt-1"></i>
+                                Core team from Polygon Labs, Ethereum Foundation and global blockchain security institutions
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-exchange-alt text-cyber-cyan mr-3 mt-1"></i>
+                                Provide decentralized payment, custom smart contract and cross-border settlement services
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Polygon Core Advantages -->
+                    <div class="bg-glass border-glow rounded-2xl p-8">
+                        <h3 class="text-2xl font-orbitron text-white mb-6">2.2 Polygon Core Advantages</h3>
+                        <ul class="text-gray-300 space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-bolt text-cyber-cyan mr-3 mt-1"></i>
+                                Fast transaction: 2–3s block confirmation
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-coins text-cyber-cyan mr-3 mt-1"></i>
+                                Near-zero gas fee, low threshold for global users
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-shield-alt text-cyber-cyan mr-3 mt-1"></i>
+                                Inherit Ethereum top-level security, immutable on-chain data
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-code text-cyber-cyan mr-3 mt-1"></i>
+                                Full EVM compatibility, support all DeFi and DApp protocols
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-server text-cyber-cyan mr-3 mt-1"></i>
+                                Multi-server & multi-domain synchronous deployment, unified on-chain data
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Token Economics -->
+    <section id="tokenomics" class="py-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="section-fade-in">
+                <h2 class="text-4xl font-orbitron text-cyber-cyan mb-8 flex items-center">
+                    <span class="text-6xl mr-4 opacity-50">03</span>Token Economics
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Basic Token Info -->
+                    <div class="bg-glass border-glow rounded-2xl p-8">
+                        <h3 class="text-2xl font-orbitron text-white mb-6">3.1 Basic Token Info</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Full Name:</span>
+                                <span class="text-white font-bold">RAYC Global Ecology Token</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Symbol:</span>
+                                <span class="text-white font-bold text-cyber-cyan">RAYC</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Blockchain:</span>
+                                <span class="text-white font-bold">Polygon (Matic)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Total Supply:</span>
+                                <span class="text-white font-bold">275,000,000</span>
+                            </div>
+                            <div class="pt-4 border-t border-gray-700">
+                                <p class="text-gray-300">
+                                    <span class="text-cyber-cyan font-bold">Rule:</span> 
+                                    No private sale, no pre-mine, no team allocation, no manual mint, 
+                                    <span class="text-cyber-cyan font-bold">100% on-chain ecological output</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Output & Burn -->
+                    <div class="space-y-6">
+                        <!-- Output Sources -->
+                        <div class="bg-glass border-glow rounded-2xl p-8">
+                            <h3 class="text-xl font-orbitron text-white mb-4">3.2 Output Sources</h3>
+                            <ol class="text-gray-300 space-y-2 list-decimal list-inside">
+                                <li>Multi-cycle staking mining</li>
+                                <li>Holding daily interest income</li>
+                                <li>Global two-level referral reward</li>
+                                <li>200 global DAO guild dividend pool</li>
+                            </ol>
+                        </div>
+
+                        <!-- Deflation & Burn -->
+                        <div class="bg-glass border-glow rounded-2xl p-8">
+                            <h3 class="text-xl font-orbitron text-white mb-4">3.3 Deflation & Burn Mechanism</h3>
+                            <p class="text-gray-300">
+                                On-chain transfer and offline physical consumption will trigger automatic token burn. 
+                                Larger real economy scale brings higher burn volume, reducing circulating supply and promoting long-term value growth.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- On-Chain DeFi Core Ecology -->
+    <section id="defi-ecology" class="py-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="section-fade-in">
+                <h2 class="text-4xl font-orbitron text-cyber-cyan mb-8 flex items-center">
+                    <span class="text-6xl mr-4 opacity-50">04</span>On-Chain DeFi Core Ecology
+                </h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-glass border-glow rounded-xl p-6 text-center">
+                        <i class="fas fa-hand-holding-usd text-3xl text-cyber-cyan mb-4"></i>
+                        <h3 class="text-lg font-orbitron text-white mb-3">4.1 Holding Interest</h3>
+                        <p class="text-gray-400 text-sm">Users gain daily automatic on-chain rewards by holding RAYC, compound interest growth without manual intervention.</p>
+                    </div>
+                    <div class="bg-glass border-glow rounded-xl p-6 text-center">
+                        <i class="fas fa-chart-line text-3xl text-cyber-cyan mb-4"></i>
+                        <h3 class="text-lg font-orbitron text-white mb-3">4.2 Multi-Cycle Staking</h3>
+                        <p class="text-gray-400 text-sm">Multiple lock-up cycles with increasing mining yield ratios. All rewards are automatically distributed by smart contracts.</p>
+                    </div>
+                    <div class="bg-glass border-glow rounded-xl p-6 text-center">
+                        <i class="fas fa-network-wired text-3xl text-cyber-cyan mb-4"></i>
+                        <h3 class="text-lg font-orbitron text-white mb-3">4.3 Global Referral</h3>
+                        <p class="text-gray-400 text-sm">Primary direct referral reward & secondary team reward, auto on-chain distribution, fair and transparent.</p>
+                    </div>
+                    <div class="bg-glass border-glow rounded-xl p-6 text-center">
+                        <i class="fas fa-users-cog text-3xl text-cyber-cyan mb-4"></i>
+                        <h3 class="text-lg font-orbitron text-white mb-3">4.4 DAO Guild System</h3>
+                        <p class="text-gray-400 text-sm">200 standardized autonomous business guilds worldwide, building a global distributed commercial alliance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Real Economy Application Scenarios -->
+    <section id="real-economy" class="py-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="section-fade-in">
+                <h2 class="text-4xl font-orbitron text-cyber-cyan mb-8 flex items-center">
+                    <span class="text-6xl mr-4 opacity-50">05</span>Global Real Economy Application Scenarios
+                </h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-glass border-glow rounded-xl p-6">
+                        <i class="fas fa-industry text-2xl text-cyber-purple mb-4"></i>
+                        <h3 class="text-lg font-orbitron text-white mb-3">5.1 Refining & Energy</h3>
+                        <ul class="text-gray-400 text-sm space-y-1">
+                            <li>• Cross-border refined oil settlement</li>
+                            <li>• Petrochemical supply chain payment</li>
+                            <li>• Energy enterprise value asset storage</li>
+                        </ul>
+                    </div>
+                    <div class="bg-glass border-glow rounded-xl p-6">
+                        <i class="fas fa-hotel text-2xl text-cyber-purple mb-4"></i>
+                        <h3 class="text-lg font-orbitron text-white mb-3">5.2 Star Hotels</h3>
+                        <ul class="text-gray-400 text-sm space-y-1">
+                            <li>• Direct payment for hotel room fees</li>
+                            <li>• Hotel membership recharge</li>
+                            <li>• Cross-region universal settlement</li>
+                        </ul>
+                    </div>
+                    <div class="bg-glass border-glow rounded-xl p-6">
+                        <i class="fas fa-shopping-cart text-2xl text-cyber-purple mb-4"></i>
+                        <h3 class="text-lg font-orbitron text-white mb-3">5.3 Supermarkets & Retail</h3>
+                        <ul class="text-gray-400 text-sm space-y-1">
+                            <li>• Daily necessities offline payment</li>
+                            <li>• Cross-border imported goods</li>
+                            <li>• Convenience store universal deduction</li>
+                        </ul>
+                    </div>
+                    <div class="bg-glass border-glow rounded-xl p-6">
+                        <i class="fas fa-golf-ball text-2xl text-cyber-purple mb-4"></i>
+                        <h3 class="text-lg font-orbitron text-white mb-3">5.4 Golf & Private Clubs</h3>
+                        <ul class="text-gray-400 text-sm space-y-1">
+                            <li>• Golf annual membership</li>
+                            <li>• Elite private club settlement</li>
+                            <li>• High-end circle exclusive token</li>
+                        </ul>
+                    </div>
+                    <div class="bg-glass border-glow rounded-xl p-6">
+                        <i class="fas fa-theater-masks text-2xl text-cyber-purple mb-4"></i>
+                        <h3 class="text-lg font-orbitron text-white mb-3">5.5 Entertainment & Tourism</h3>
+                        <ul class="text-gray-400 text-sm space-y-1">
+                            <li>• Compliant entertainment centers</li>
+                            <li>• Scenic spot tickets</li>
+                            <li>• Theme park universal payment</li>
+                        </ul>
+                    </div>
+                    <div class="bg-glass border-glow rounded-xl p-6">
+                        <i class="fas fa-ship text-2xl text-cyber-purple mb-4"></i>
+                        <h3 class="text-lg font-orbitron text-white mb-3">5.6 Global Cross-Border Trade</h3>
+                        <ul class="text-gray-400 text-sm space-y-1">
+                            <li>• International trade payment</li>
+                            <li>• Global logistics & warehouse</li>
+                            <li>• Merchant reserve digital assets</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DApp Architecture -->
+    <section id="architecture" class="py-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="section-fade-in">
+                <h2 class="text-4xl font-orbitron text-cyber-cyan mb-8 flex items-center">
+                    <span class="text-6xl mr-4 opacity-50">06</span>Dual-Server & Dual-Domain DApp Architecture
+                </h2>
+                <div class="bg-glass border-glow rounded-2xl p-8">
+                    <p class="text-gray-300 mb-8 text-center text-lg">
+                        To ensure permanent stable global access: 
+                        <span class="text-cyber-cyan font-bold">Two independent overseas high-defense servers + Two independent top-level domains</span>
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="text-center">
+                            <div class="bg-card-bg rounded-xl p-6 mb-4">
+                                <i class="fas fa-server text-4xl text-cyber-cyan mb-4"></i>
+                                <h3 class="text-xl font-orbitron text-white">Server Architecture</h3>
+                            </div>
+                            <ul class="text-gray-300 space-y-2">
+                                <li>• Same on-chain contracts</li>
+                                <li>• Real-time synchronous data</li>
+                                <li>• Automatic backup access</li>
+                                <li>• Avoid domain blocking risk</li>
+                            </ul>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-card-bg rounded-xl p-6 mb-4">
+                                <i class="fas fa-globe text-4xl text-cyber-purple mb-4"></i>
+                                <h3 class="text-xl font-orbitron text-white">Global Operation</h3>
+                            </div>
+                            <ul class="text-gray-300 space-y-2">
+                                <li>• Contract parameter modification</li>
+                                <li>• Takes effect globally on-chain</li>
+                                <li>• Avoid server failure risk</li>
+                                <li>• Permanent stable operation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section id="roadmap" class="py-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="section-fade-in">
+                <h2 class="text-4xl font-orbitron text-cyber-cyan mb-8 flex items-center">
+                    <span class="text-6xl mr-4 opacity-50">07</span>Roadmap
+                </h2>
+                <div class="relative">
+                    <!-- Timeline Line -->
+                    <div class="absolute left-4 top-0 bottom-0 w-1 bg-cyber-purple/30 hidden md:block"></div>
+                    
+                    <div class="space-y-8">
+                        <!-- 2026 Q2 -->
+                        <div class="flex md:items-center">
+                            <div class="md:w-1/4 mb-4 md:mb-0">
+                                <div class="bg-cyber-cyan text-dark-bg font-orbitron font-bold rounded-lg px-4 py-2 text-center">
+                                    2026 Q2
+                                </div>
+                                <div class="text-gray-400 text-sm mt-2">Technical Completion</div>
+                            </div>
+                            <div class="md:w-3/4">
+                                <div class="bg-glass border-glow rounded-xl p-6">
+                                    <ul class="text-gray-300 space-y-2">
+                                        <li>• Complete Polygon smart contract deployment & professional security audit</li>
+                                        <li>• Dual-server dual-domain DApp official launch</li>
+                                        <li>• Establish 200 global DAO guild system</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2026 Q3 -->
+                        <div class="flex md:items-center">
+                            <div class="md:w-1/4 mb-4 md:mb-0">
+                                <div class="bg-cyber-cyan text-dark-bg font-orbitron font-bold rounded-lg px-4 py-2 text-center">
+                                    2026 Q3
+                                </div>
+                                <div class="text-gray-400 text-sm mt-2">Ecology Launch</div>
+                            </div>
+                            <div class="md:w-3/4">
+                                <div class="bg-glass border-glow rounded-xl p-6">
+                                    <ul class="text-gray-300 space-y-2">
+                                        <li>• Open holding interest & multi-cycle staking mining</li>
+                                        <li>• Launch global two-level referral system</li>
+                                        <li>• Access first batch of overseas hotels, supermarkets and entertainment scenarios</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2026 Q4 -->
+                        <div class="flex md:items-center">
+                            <div class="md:w-1/4 mb-4 md:mb-0">
+                                <div class="bg-cyber-cyan text-dark-bg font-orbitron font-bold rounded-lg px-4 py-2 text-center">
+                                    2026 Q4
+                                </div>
+                                <div class="text-gray-400 text-sm mt-2">Large-Scale Physical Implementation</div>
+                            </div>
+                            <div class="md:w-3/4">
+                                <div class="bg-glass border-glow rounded-xl p-6">
+                                    <ul class="text-gray-300 space-y-2">
+                                        <li>• Complete energy refining industry scenario access</li>
+                                        <li>• Launch high-end golf & private club ecology</li>
+                                        <li>• List on international decentralized exchanges</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2027 -->
+                        <div class="flex md:items-center">
+                            <div class="md:w-1/4 mb-4 md:mb-0">
+                                <div class="bg-cyber-purple text-white font-orbitron font-bold rounded-lg px-4 py-2 text-center">
+                                    2027
+                                </div>
+                                <div class="text-gray-400 text-sm mt-2">Global Business Expansion</div>
+                            </div>
+                            <div class="md:w-3/4">
+                                <div class="bg-glass border-glow rounded-xl p-6">
+                                    <ul class="text-gray-300 space-y-2">
+                                        <li>• More than 100 global physical enterprises access RAYC payment system</li>
+                                        <li>• Complete full-scene closed-loop of energy/hotel/supermarket/golf/entertainment/trade</li>
+                                        <li>• Become top physical ecological token on Polygon chain</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Summary -->
+    <section id="summary" class="py-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="section-fade-in">
+                <h2 class="text-4xl font-orbitron text-cyber-cyan mb-8 flex items-center">
+                    <span class="text-6xl mr-4 opacity-50">08</span>Project Summary
+                </h2>
+                <div class="bg-glass border-glow rounded-2xl p-8 text-center">
+                    <div class="mb-8">
+                        <i class="fas fa-shield-check text-6xl text-cyber-cyan mb-4"></i>
+                        <h3 class="text-2xl font-orbitron text-white mb-4">Supported by Singapore compliant blockchain company</h3>
+                        <h3 class="text-2xl font-orbitron text-white mb-4">Polygon underlying technology</h3>
+                        <h3 class="text-2xl font-orbitron text-white mb-4">fully decentralized on-chain contracts</h3>
+                        <h3 class="text-2xl font-orbitron text-white mb-6">and massive global physical application scenarios</h3>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-8 mb-8">
+                        <div class="bg-card-bg rounded-xl p-6">
+                            <h4 class="text-xl font-orbitron text-cyber-cyan mb-2">On-chain financial value creation</h4>
+                        </div>
+                        <div class="bg-card-bg rounded-xl p-6">
+                            <h4 class="text-xl font-orbitron text-cyber-purple mb-2">Offline physical value support</h4>
+                        </div>
+                    </div>
+                    
+                    <p class="text-xl text-gray-300 italic">
+                        "Build a safe, stable, permanent and valuable new-generation global Web3 ecological token."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-gray-800">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p class="text-gray-400">
+                © 2026 BlockTech Global Pte. Ltd. All rights reserved.
+            </p>
+            <p class="text-gray-600 text-sm mt-2">
+                This white paper is for informational purposes only and does not constitute investment advice.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 bg-cyber-cyan text-dark-bg w-12 h-12 rounded-full shadow-lg hover:bg-cyan-400 transition-all duration-300 opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Back to top button
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.remove('opacity-0', 'invisible');
+                backToTopBtn.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'invisible');
+                backToTopBtn.classList.remove('opacity-100', 'visible');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Add floating animation to elements
+        function createFloatingElements() {
+            const container = document.body;
+            const colors = ['#00F5FF', '#7928CA', '#FF0099'];
+            
+            for (let i = 0; i < 10; i++) {
+                const element = document.createElement('div');
+                element.style.position = 'fixed';
+                element.style.width = Math.random() * 100 + 20 + 'px';
+                element.style.height = element.style.width;
+                element.style.background = colors[Math.floor(Math.random() * colors.length)] + '20';
+                element.style.borderRadius = '50%';
+                element.style.filter = 'blur(10px)';
+                element.style.left = Math.random() * 100 + '%';
+                element.style.top = Math.random() * 100 + '%';
+                element.style.zIndex = '-1';
+                element.style.animation = 'float ' + (Math.random() * 10 + 5) + 's ease-in-out infinite';
+                element.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(element);
+            }
+        }
+
+        // Initialize floating elements when page loads
+        window.addEventListener('load', createFloatingElements);
+    </script>
 </body>
 </html>
