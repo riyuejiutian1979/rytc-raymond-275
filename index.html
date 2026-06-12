@@ -14,13 +14,15 @@
         body {
             background: linear-gradient(135deg, #0a0e17 0%, #1a1f35 100%);
             color: #e0e0e0;
-            line-height: 1.6;
+            line-height: 1.8;
+            font-size: 16px;
         }
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
+        /* 语言切换按钮 */
         .lang-switch {
             position: fixed;
             top: 20px;
@@ -28,331 +30,389 @@
             z-index: 1000;
         }
         .lang-btn {
-            padding: 8px 16px;
+            padding: 10px 20px;
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
+            color: #fff;
             border: none;
-            border-radius: 20px;
+            border-radius: 25px;
             cursor: pointer;
             margin-left: 10px;
             font-weight: bold;
             transition: all 0.3s ease;
+            font-size: 15px;
         }
         .lang-btn.active {
             background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
-            box-shadow: 0 0 15px rgba(106, 17, 203, 0.5);
+            box-shadow: 0 0 15px rgba(106, 17, 203, 0.6);
         }
+        /* 头部区域 */
         .header {
             text-align: center;
-            padding: 60px 20px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 15px;
+            padding: 70px 20px;
+            background: rgba(0,0,0,0.35);
+            border-radius: 18px;
             margin-bottom: 40px;
         }
         .logo {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 20px;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 25px;
             background: url('https://i.imgs.ovh/2026/06/13/bf8fec7566045bfadb50d371495cffe7.png') center/cover no-repeat;
             border-radius: 50%;
             border: 3px solid #6a11cb;
-            box-shadow: 0 0 30px rgba(106, 17, 203, 0.3);
+            box-shadow: 0 0 35px rgba(106, 17, 203, 0.4);
         }
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
         .subtitle {
-            font-size: 1.2rem;
-            color: #aaa;
-            margin-bottom: 30px;
+            font-size: 1.3rem;
+            color: #b0b0b0;
+            margin-bottom: 20px;
         }
+        /* 通用板块样式 */
         .section {
             background: rgba(255,255,255,0.05);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            border-left: 4px solid #6a11cb;
+            border-radius: 18px;
+            padding: 35px;
+            margin-bottom: 35px;
+            border-left: 5px solid #6a11cb;
         }
         .section h2 {
             color: #4ecdc4;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
+            margin-bottom: 25px;
+            font-size: 1.9rem;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(78, 205, 196, 0.2);
         }
+        .section h3 {
+            color: #ff6b6b;
+            margin: 20px 0 12px;
+            font-size: 1.4rem;
+        }
+        .section p, .section li {
+            color: #d8d8d8;
+            margin-bottom: 12px;
+        }
+        .section ul {
+            padding-left: 25px;
+            margin: 10px 0;
+        }
+        /* 代币信息卡片 */
         .token-info {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+            margin-top: 25px;
         }
         .info-card {
             background: rgba(255,255,255,0.08);
-            padding: 20px;
-            border-radius: 10px;
+            padding: 22px;
+            border-radius: 12px;
             border: 1px solid rgba(106, 17, 203, 0.3);
         }
-        .info-card h3 {
-            color: #ff6b6b;
+        .info-card h4 {
+            color: #45b7d1;
             margin-bottom: 10px;
+            font-size: 1.1rem;
         }
         .contract-address {
-            background: rgba(0,0,0,0.3);
-            padding: 15px;
-            border-radius: 8px;
-            font-family: monospace;
+            background: rgba(0,0,0,0.4);
+            padding: 18px;
+            border-radius: 10px;
+            font-family: "Courier New", monospace;
             word-break: break-all;
-            margin-top: 10px;
+            margin-top: 15px;
+            color: #4ecdc4;
         }
+        /* 特色卡片网格 */
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            gap: 22px;
+            margin-top: 25px;
         }
         .feature-card {
             background: rgba(255,255,255,0.08);
-            padding: 25px;
-            border-radius: 12px;
+            padding: 28px;
+            border-radius: 14px;
             border: 1px solid rgba(78, 205, 196, 0.3);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(78, 205, 196, 0.2);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 35px rgba(78, 205, 196, 0.25);
         }
-        .feature-card h3 {
-            color: #4ecdc4;
-            margin-bottom: 15px;
-        }
+        /* 挖矿板块样式 */
         .mining-section {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.1), rgba(37, 117, 252, 0.1));
-            border-radius: 12px;
-            padding: 25px;
-            margin-top: 20px;
+            background: linear-gradient(135deg, rgba(106, 17, 203, 0.12), rgba(37, 117, 252, 0.12));
+            border-radius: 14px;
+            padding: 28px;
+            margin-top: 22px;
         }
         .mining-card {
             background: rgba(255,255,255,0.08);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            border-left: 3px solid #ff6b6b;
+            padding: 22px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            border-left: 4px solid #ff6b6b;
         }
+        /* 底部 */
         .footer {
             text-align: center;
-            padding: 40px 20px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 15px;
-            margin-top: 40px;
+            padding: 45px 20px;
+            background: rgba(0,0,0,0.35);
+            border-radius: 18px;
+            margin-top: 45px;
+            color: #888;
         }
-        .lang-content {
+        /* 默认显示英文，隐藏中文 */
+        .zh-content {
             display: none;
         }
-        .lang-content.active {
+        .en-content {
             display: block;
         }
+        /* 移动端适配 */
         @media (max-width: 768px) {
             .lang-switch {
-                top: 10px;
-                right: 10px;
+                top: 12px;
+                right: 12px;
             }
             h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             .container {
-                padding: 10px;
+                padding: 12px;
+            }
+            .section {
+                padding: 22px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- 语言切换按钮 -->
     <div class="lang-switch">
-        <button class="lang-btn active" onclick="switchLang('en')">English</button>
-        <button class="lang-btn" onclick="switchLang('zh')">中文</button>
+        <button class="lang-btn active" onclick="switchToEn()">English</button>
+        <button class="lang-btn" onclick="switchToZh()">中文</button>
     </div>
 
     <div class="container">
-        <!-- Header -->
+        <!-- 头部标题 -->
         <div class="header">
             <div class="logo"></div>
             <h1>RAYC</h1>
-            <div class="subtitle lang-content active" id="en-subtitle">Raymond Global Ecology Token Whitepaper</div>
-            <div class="subtitle lang-content" id="zh-subtitle">雷蒙德全球生态通证 白皮书</div>
+            <div class="subtitle zh-content">雷蒙德全球生态通证 · 官方白皮书</div>
+            <div class="subtitle en-content">Raymond Global Ecology Token Whitepaper</div>
         </div>
 
-        <!-- Token Overview -->
+        <!-- 一、代币基础信息 -->
         <div class="section">
-            <h2 class="lang-content active" id="en-overview-title">Token Overview</h2>
-            <h2 class="lang-content" id="zh-overview-title">代币概览</h2>
-            
+            <h2 class="zh-content">代币基础信息</h2>
+            <h2 class="en-content">Token Basic Information</h2>
+
             <div class="token-info">
                 <div class="info-card">
-                    <h3 class="lang-content active" id="en-fullname">Full Name</h3>
-                    <h3 class="lang-content" id="zh-fullname">全称</h3>
+                    <h4 class="zh-content">通证全称</h4>
+                    <h4 class="en-content">Full Name</h4>
                     <p>Raymond Global Ecology Token</p>
                 </div>
                 <div class="info-card">
-                    <h3>Symbol</h3>
+                    <h4>Symbol</h4>
                     <p>RAYC</p>
                 </div>
                 <div class="info-card">
-                    <h3 class="lang-content active" id="en-chain">Blockchain</h3>
-                    <h3 class="lang-content" id="zh-chain">公链</h3>
+                    <h4 class="zh-content">底层公链</h4>
+                    <h4 class="en-content">Public Blockchain</h4>
                     <p>Polygon (Matic)</p>
                 </div>
                 <div class="info-card">
-                    <h3 class="lang-content active" id="en-supply">Total Supply</h3>
-                    <h3 class="lang-content" id="zh-supply">总供应量</h3>
+                    <h4 class="zh-content">总发行量</h4>
+                    <h4 class="en-content">Total Supply</h4>
                     <p>275,000,000 RAYC</p>
                 </div>
             </div>
 
-            <div class="info-card" style="margin-top:20px;">
-                <h3 class="lang-content active" id="en-contract">Contract Address</h3>
-                <h3 class="lang-content" id="zh-contract">合约地址</h3>
+            <div class="info-card" style="margin-top: 22px;">
+                <h4 class="zh-content">智能合约地址</h4>
+                <h4 class="en-content">Smart Contract Address</h4>
                 <div class="contract-address">0x00264cf668b959f87998f54e239d2e93d42a5fc3</div>
             </div>
         </div>
 
-        <!-- Why Polygon -->
+        <!-- 二、选择Polygon公链的优势 -->
         <div class="section">
-            <h2 class="lang-content active" id="en-polygon-title">Why Polygon?</h2>
-            <h2 class="lang-content" id="zh-polygon-title">为什么选择Polygon链？</h2>
-            
+            <h2 class="zh-content">选择Polygon马蹄链的核心优势</h2>
+            <h2 class="en-content">Advantages of Polygon Blockchain</h2>
+
             <div class="features">
                 <div class="feature-card">
-                    <h3 class="lang-content active" id="en-polygon1">Low Gas Fees</h3>
-                    <h3 class="lang-content" id="zh-polygon1">极低Gas费用</h3>
-                    <p class="lang-content active" id="en-polygon1-desc">Polygon offers near-zero transaction costs, making it ideal for high-frequency gaming and social interactions without burdening users.</p>
-                    <p class="lang-content" id="zh-polygon1-desc">Polygon链提供近乎为零的交易成本，非常适合高频游戏和社交互动，不会给用户带来Gas负担。</p>
+                    <h3 class="zh-content">交易手续费极低</h3>
+                    <h3 class="en-content">Ultra Low Gas Fees</h3>
+                    <p class="zh-content">Polygon链拥有近乎零手续费的特性，完美适配游戏、社交类高频操作，彻底免除用户交易成本压力。</p>
+                    <p class="en-content">Polygon features nearly zero transaction costs, perfectly matching high-frequency operations for games and social scenarios, eliminating users' cost pressure.</p>
                 </div>
                 <div class="feature-card">
-                    <h3 class="lang-content active" id="en-polygon2">High Performance</h3>
-                    <h3 class="lang-content" id="zh-polygon2">高性能与可扩展性</h3>
-                    <p class="lang-content active" id="en-polygon2-desc">Polygon supports thousands of transactions per second, ensuring smooth gameplay and real-time social interactions.</p>
-                    <p class="lang-content" id="zh-polygon2-desc">Polygon每秒可处理数千笔交易，保障流畅的游戏体验和实时社交互动。</p>
+                    <h3 class="zh-content">高性能、高可拓展性</h3>
+                    <h3 class="en-content">High TPS & Scalability</h3>
+                    <p class="zh-content">链上可承载海量并发交易，保障游戏流畅运行与实时社交互动，体验稳定不卡顿。</p>
+                    <p class="en-content">It supports massive concurrent transactions, ensuring smooth game running and real-time social interaction for all users.</p>
                 </div>
                 <div class="feature-card">
-                    <h3 class="lang-content active" id="en-polygon3">EVM Compatibility</h3>
-                    <h3 class="lang-content" id="zh-polygon3">EVM完全兼容</h3>
-                    <p class="lang-content active" id="en-polygon3-desc">Fully compatible with Ethereum Virtual Machine, enabling easy deployment of smart contracts and integration with existing tools.</p>
-                    <p class="lang-content" id="zh-polygon3-desc">与以太坊虚拟机完全兼容，便于智能合约部署和现有工具集成。</p>
+                    <h3 class="zh-content">完全兼容EVM虚拟机</h3>
+                    <h3 class="en-content">Full EVM Compatibility</h3>
+                    <p class="zh-content">兼容以太坊生态，智能合约部署、迁移、工具对接简单便捷，开发运维成本更低。</p>
+                    <p class="en-content">Compatible with Ethereum ecosystem, easy for smart contract deployment, migration and tool integration.</p>
                 </div>
                 <div class="feature-card">
-                    <h3 class="lang-content active" id="en-polygon4">Strong Security</h3>
-                    <h3 class="lang-content" id="zh-polygon4">安全可靠</h3>
-                    <p class="lang-content active" id="en-polygon4-desc">Built on Ethereum's security foundation with robust validator network, ensuring the safety of user assets and transactions.</p>
-                    <p class="lang-content" id="zh-polygon4-desc">基于以太坊安全基础构建，拥有强大的验证节点网络，保障用户资产和交易安全。</p>
+                    <h3 class="zh-content">安全稳定、生态成熟</h3>
+                    <h3 class="en-content">High Security & Stability</h3>
+                    <p class="zh-content">继承以太坊安全体系，节点网络完善，全方位保障用户资产与链上数据安全。</p>
+                    <p class="en-content">Inherits Ethereum's security mechanism with a complete node network, fully protecting user assets and on-chain data.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Raymond Family -->
+        <!-- 三、雷蒙德家族 背景与定位 -->
         <div class="section">
-            <h2 class="lang-content active" id="en-family-title">Raymond Family</h2>
-            <h2 class="lang-content" id="zh-family-title">雷蒙德家族</h2>
-            
-            <p class="lang-content active" id="en-family-desc">The Raymond Family is the core governance and development entity behind the RAYC ecosystem. Rooted in the spirit of community collaboration and shared prosperity, the family is committed to building a sustainable Web3 leisure ecosystem centered around the RAYC token. Through transparent governance and community-driven development, we aim to create a platform where every member can participate, contribute, and benefit together.</p>
-            <p class="lang-content" id="zh-family-desc">雷蒙德家族是RAYC生态背后的核心治理与开发主体。秉持社区协作与共享繁荣的精神，家族致力于构建以RAYC通证为核心的可持续Web3休闲生态。通过透明治理与社区驱动的发展，我们旨在打造一个每个成员都能参与、贡献、共同受益的平台。</p>
+            <h2 class="zh-content">雷蒙德家族 — 背景与核心定位</h2>
+            <h2 class="en-content">Raymond Family - Background & Positioning</h2>
+
+            <h3 class="zh-content">家族背景</h3>
+            <h3 class="en-content">Family Background</h3>
+            <p class="zh-content">雷蒙德家族（Raymond Family）源自经典欧洲贵族文化IP，延续团结、共治、长久经营的家族理念，深耕Polygon（马蹄链），以自有通证 RAYC 为核心流通载体，聚焦休闲社交类链游赛道，打造低门槛、高互动、强粘性的Web3娱乐生态。</p>
+            <p class="en-content">Derived from the classic European aristocratic cultural IP, the Raymond Family adheres to the concepts of unity, co-governance and long-term operation. We deeply layout on Polygon blockchain, take the native token RAYC as the core circulation carrier, focus on social casual game track, and build a low-threshold, high-interaction and high-viscosity Web3 entertainment ecosystem.</p>
+
+            <h3 class="zh-content">核心定位</h3>
+            <h3 class="en-content">Core Positioning</h3>
+            <p class="zh-content">以休闲农场社交游戏为核心落地场景，结合NFT土地、作物资产、好友互动、市场交易、社群合作社等玩法，让每一位参与者在轻松娱乐、社交交友的同时，共享生态发展价值。</p>
+            <p class="en-content">We take social farming game as the core landing scenario, combining NFT land, crop assets, friend interaction, marketplace trading and community cooperative gameplay. All participants can enjoy entertainment and socializing, while sharing the value growth of the entire ecosystem.</p>
         </div>
 
-        <!-- Mining System -->
+        <!-- 四、核心业务与生态体系 -->
         <div class="section">
-            <h2 class="lang-content active" id="en-mining-title">Cloud Mining System</h2>
-            <h2 class="lang-content" id="zh-mining-title">云挖矿体系</h2>
-            
+            <h2 class="zh-content">核心业务与生态体系</h2>
+            <h2 class="en-content">Core Business & Ecosystem System</h2>
+
+            <h3 class="zh-content">一、生态通证 RAYC</h3>
+            <h3 class="en-content">1. Ecosystem Token - RAYC</h3>
+            <p class="zh-content">RAYC 为雷蒙德家族生态唯一通用通证，总量恒定，部署于Polygon马蹄链，链上资产公开透明、转账低成本、流转高效。全生态统一流通，可用于农场内购买种子、升级土地、道具兑换、市场交易、社交互动等所有场景，同时依托交易手续费机制实现通证通缩，长期稳定价值。</p>
+            <p class="en-content">RAYC is the only universal token of Raymond Family ecosystem with a fixed total supply. Deployed on Polygon, all on-chain assets are transparent, transactions are low-cost and efficient. RAYC is circulated in all scenarios of the ecosystem, including buying seeds, upgrading lands, exchanging props, marketplace trading and social interaction. Meanwhile, the transaction fee mechanism realizes continuous token deflation to maintain long-term value stability.</p>
+
+            <h3 class="zh-content">二、主力产品：休闲社交农场链游</h3>
+            <h3 class="en-content">2. Main Product: Social Casual Farming Game</h3>
+            <p class="zh-content">对标主流爆款休闲农场玩法，融合传统农场乐趣与区块链资产属性：</p>
+            <p class="en-content">Learning from popular classic farming games, it combines traditional farm fun with blockchain asset attributes:</p>
+
+            <ul class="zh-content">
+                <li>农场基建：NFT土地、作物、装饰道具，资产链上确权，归属永久可查；</li>
+                <li>种植经营：播种、生长、收割、售卖，完整经营闭环；</li>
+                <li>社交互动：好友串门、互助劳作、好友组队、家族合作社、排行榜互动；</li>
+                <li>自由交易：玩家点对点交易作物与道具，全程链上结算，公平可追溯。</li>
+            </ul>
+            <ul class="en-content">
+                <li>Farm Infrastructure: NFT lands, crops and decorative props, all assets are confirmed on-chain with permanent ownership records.</li>
+                <li>Farming Operation: Complete closed-loop experience including sowing, growing, harvesting and selling.</li>
+                <li>Social Interaction: Visiting friends' farms, mutual assistance, teaming up, family cooperatives and ranking interaction.</li>
+                <li>Free Trading: Peer-to-peer trading of crops and props, all transactions are settled on-chain, fair and traceable.</li>
+            </ul>
+
+            <h3 class="zh-content">三、家族治理与运营</h3>
+            <h3 class="en-content">3. Family Governance & Operation</h3>
+            <p class="zh-content">雷蒙德家族作为生态发起方与运营主体，负责合约安全维护、经济模型优化、版本迭代、社群服务与生态拓展。生态采用社区共建模式，鼓励玩家抱团发展、组队协作，打造有温度、有活力、有长期价值的家族社群。</p>
+            <p class="en-content">As the initiator and operator of the ecosystem, Raymond Family is responsible for smart contract security maintenance, economic model optimization, version iteration, community services and ecological expansion. The ecosystem adopts a community co-construction mode to encourage players to cooperate and build a warm, dynamic and long-term valuable family community.</p>
+        </div>
+
+        <!-- 五、云挖矿体系 -->
+        <div class="section">
+            <h2 class="zh-content">云挖矿体系</h2>
+            <h2 class="en-content">Cloud Mining System</h2>
+            <p class="zh-content">生态采用云挖矿模式，摒弃实体矿机，用户可通过多种渠道获取RAYC奖励，参与门槛低、覆盖面广。</p>
+            <p class="en-content">We adopt cloud mining mode instead of physical mining machines. Users can obtain RAYC rewards through multiple ways, with low threshold and high participation.</p>
+
             <div class="mining-section">
                 <div class="mining-card">
-                    <h3 class="lang-content active" id="en-mining1">Game Mining</h3>
-                    <h3 class="lang-content" id="zh-mining1">游戏挖矿</h3>
-                    <p class="lang-content active" id="en-mining1-desc">Earn RAYC tokens through daily gameplay in our social farming game. Plant crops, harvest produce, complete tasks, and interact with friends to accumulate mining rewards.</p>
-                    <p class="lang-content" id="zh-mining1-desc">通过我们的社交农场游戏日常玩法赚取RAYC代币。种植作物、收割收获、完成任务、与朋友互动，累积挖矿奖励。</p>
+                    <h3 class="zh-content">游戏挖矿</h3>
+                    <h3 class="en-content">Game Mining</h3>
+                    <p class="zh-content">通过农场日常玩法、完成任务、社交互动赚取RAYC奖励，参与活跃度越高，挖矿收益越高。</p>
+                    <p class="en-content">Gain RAYC rewards by daily farming gameplay, finishing quests and interacting with other players. The more active you are, the more rewards you get.</p>
                 </div>
                 <div class="mining-card">
-                    <h3 class="lang-content active" id="en-mining2">Liquidity Mining</h3>
-                    <h3 class="lang-content" id="zh-mining2">流动性挖矿</h3>
-                    <p class="lang-content active" id="en-mining2-desc">Provide liquidity to RAYC/USDC pools on Polygon DEX platforms and earn additional RAYC rewards through staking LP tokens.</p>
-                    <p class="lang-content" id="zh-mining2-desc">在Polygon去中心化交易所平台为RAYC/USDC交易池提供流动性，通过质押LP代币赚取额外RAYC奖励。</p>
+                    <h3 class="zh-content">流动性挖矿</h3>
+                    <h3 class="en-content">Liquidity Mining</h3>
+                    <p class="zh-content">在Polygon去中心化交易所为RAYC交易对提供流动性，质押LP代币，获取稳定挖矿收益。</p>
+                    <p class="en-content">Provide liquidity for RAYC trading pairs on Polygon DEX, stake LP tokens to obtain steady mining income.</p>
                 </div>
                 <div class="mining-card">
-                    <h3 class="lang-content active" id="en-mining3">Contribution Mining</h3>
-                    <h3 class="lang-content" id="zh-mining3">贡献挖矿</h3>
-                    <p class="lang-content active" id="en-mining3-desc">Earn mining weight through community contributions, referrals, content creation, and ecosystem promotion. More active participation leads to higher mining efficiency.</p>
-                    <p class="lang-content" id="zh-mining3-desc">通过社区贡献、推荐拉新、内容创作和生态推广获得挖矿权重。参与越活跃，挖矿效率越高。</p>
+                    <h3 class="zh-content">贡献挖矿</h3>
+                    <h3 class="en-content">Contribution Mining</h3>
+                    <p class="zh-content">通过社区推广、好友邀请、内容创作、生态贡献等行为获得挖矿权重，提升整体挖矿效率。</p>
+                    <p class="en-content">Obtain mining weight through community promotion, invitation, content creation and ecological contribution, and enhance overall mining efficiency.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Ecosystem Applications -->
+        <!-- 六、生态核心优势 -->
         <div class="section">
-            <h2 class="lang-content active" id="en-ecosystem-title">Ecosystem Applications</h2>
-            <h2 class="lang-content" id="zh-ecosystem-title">生态应用场景</h2>
-            
-            <div class="features">
-                <div class="feature-card">
-                    <h3 class="lang-content active" id="en-eco1">Social Farming Game</h3>
-                    <h3 class="lang-content" id="zh-eco1">社交农场游戏</h3>
-                    <p class="lang-content active" id="en-eco1-desc">Our flagship casual farming game combines planting, harvesting, trading, and social interaction, with RAYC as the primary in-game currency.</p>
-                    <p class="lang-content" id="zh-eco1-desc">我们的旗舰休闲农场游戏融合种植、收割、交易和社交互动，RAYC作为游戏内主要流通货币。</p>
-                </div>
-                <div class="feature-card">
-                    <h3 class="lang-content active" id="en-eco2">NFT Asset System</h3>
-                    <h3 class="lang-content" id="zh-eco2">NFT资产体系</h3>
-                    <p class="lang-content active" id="en-eco2-desc">Land NFTs, crop NFTs, and decorative assets are all traded using RAYC, providing true ownership and collectible value.</p>
-                    <p class="lang-content" id="zh-eco2-desc">土地NFT、作物NFT和装饰资产均使用RAYC交易，提供真正的所有权和收藏价值。</p>
-                </div>
-                <div class="feature-card">
-                    <h3 class="lang-content active" id="en-eco3">DAO Governance</h3>
-                    <h3 class="lang-content" id="zh-eco3">DAO治理</h3>
-                    <p class="lang-content active" id="en-eco3-desc">RAYC holders participate in ecosystem governance, voting on proposals, treasury management, and future development plans.</p>
-                    <p class="lang-content" id="zh-eco3-desc">RAYC持有者参与生态治理，对提案、国库管理和未来发展计划进行投票。</p>
-                </div>
-            </div>
+            <h2 class="zh-content">生态核心优势</h2>
+            <h2 class="en-content">Core Ecological Advantages</h2>
+            <ul class="zh-content">
+                <li>公链稳定：基于Polygon马蹄链部署，Gas费用极低，适合各类高频休闲玩法；</li>
+                <li>玩法轻量化：零上手难度，老少皆宜，社交属性强，易裂变传播；</li>
+                <li>资产透明：NFT、通证全部链上确权，数据公开、不可篡改；</li>
+                <li>经济可持续：完整消耗+产出+通缩模型，拒绝短期泡沫，立足长期运营。</li>
+            </ul>
+            <ul class="en-content">
+                <li>Stable Public Chain: Deployed on Polygon, ultra-low Gas fees adapt to all kinds of high-frequency casual gameplay.</li>
+                <li>Lightweight Gameplay: Zero entry barrier, suitable for all ages, strong social attributes and easy for community fission.</li>
+                <li>Transparent Assets: All tokens and NFT assets are confirmed on-chain, data is public and tamper-proof.</li>
+                <li>Sustainable Economy: Complete consumption-output-deflation model, resist short-term bubbles and focus on long-term operation.</li>
+            </ul>
         </div>
 
-        <!-- Vision -->
+        <!-- 七、DAO生态治理 -->
         <div class="section">
-            <h2 class="lang-content active" id="en-vision-title">Vision & Mission</h2>
-            <h2 class="lang-content" id="zh-vision-title">愿景与使命</h2>
-            
-            <p class="lang-content active" id="en-vision-desc">RAYC aims to become the leading "social gaming + DeFi" ecosystem on Polygon, building a sustainable Web3 leisure empire accessible to everyone. Our mission is to make blockchain simple, fun, and beneficial, connecting games, social interactions, assets, and value through RAYC.</p>
-            <p class="lang-content" id="zh-vision-desc">RAYC致力于成为Polygon链上领先的“社交游戏+DeFi”生态，打造人人可参与的可持续Web3休闲帝国。我们的使命是让区块链变得简单、有趣、有益，通过RAYC连接游戏、社交互动、资产和价值。</p>
+            <h2 class="zh-content">DAO生态治理</h2>
+            <h2 class="en-content">DAO Ecological Governance</h2>
+            <p class="zh-content">持有RAYC即可享有生态治理权，用户可对游戏规则调整、经济参数修改、国库资金使用、新功能上线等事项进行投票。人人可发起提案、参与决策，实现真正的社区共治、利益共享。</p>
+            <p class="en-content">RAYC holders have the right of ecological governance. Users can vote for game rule adjustment, economic parameter modification, fund management and new function launch. Everyone can put forward proposals and participate in decision-making, realizing real community co-governance and shared interests.</p>
         </div>
 
-        <!-- Footer -->
+        <!-- 八、未来发展规划 -->
+        <div class="section">
+            <h2 class="zh-content">未来发展规划</h2>
+            <h2 class="en-content">Future Development Plan</h2>
+            <p class="zh-content">雷蒙德家族将以休闲农场为起点，持续丰富游戏玩法、拓展社交场景、完善合作社体系，并逐步打通多场景生态联动，打造集娱乐、社交、资产、共创于一体的综合Web3休闲生态，与全体家族成员携手同行、共赢未来。</p>
+            <p class="en-content">Starting from the social farming game, Raymond Family will continuously enrich gameplay, expand social scenarios and improve the cooperative system. We will gradually realize multi-scenario ecological linkage, build a comprehensive Web3 ecosystem integrating entertainment, social contact, asset management and co-creation. We will work together with all family members to create long-term value and win a brilliant future hand in hand.</p>
+        </div>
+
+        <!-- 底部版权 -->
         <div class="footer">
-            <p class="lang-content active" id="en-footer">© 2026 Raymond Family. All rights reserved.</p>
-            <p class="lang-content" id="zh-footer">© 2026 雷蒙德家族. 保留所有权利.</p>
+            <p class="zh-content">© 2026 雷蒙德家族 版权所有</p>
+            <p class="en-content">© 2026 Raymond Family. All Rights Reserved.</p>
         </div>
     </div>
 
     <script>
-        function switchLang(lang) {
-            const enBtn = document.querySelector('.lang-btn:first-child');
-            const zhBtn = document.querySelector('.lang-btn:last-child');
-            
-            if(lang === 'en') {
-                enBtn.classList.add('active');
-                zhBtn.classList.remove('active');
-                document.querySelectorAll('.lang-content.active').forEach(el => {
-                    if(el.id.includes('zh')) el.classList.remove('active');
-                });
-                document.querySelectorAll('.lang-content').forEach(el => {
-                    if(el.id.includes('en')) el.classList.add('active');
-                });
-            } else {
-                zhBtn.classList.add('active');
-                enBtn.classList.remove('active');
-                document.querySelectorAll('.lang-content.active').forEach(el => {
-                    if(el.id.includes('en')) el.classList.remove('active');
-                });
-                document.querySelectorAll('.lang-content').forEach(el => {
-                    if(el.id.includes('zh')) el.classList.add('active');
-                });
-            }
+        // 切换为英文
+        function switchToEn(){
+            document.querySelectorAll('.zh-content').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.en-content').forEach(el => el.style.display = 'block');
+            document.querySelector('.lang-btn:nth-child(1)').classList.add('active');
+            document.querySelector('.lang-btn:nth-child(2)').classList.remove('active');
+        }
+        // 切换为中文
+        function switchToZh(){
+            document.querySelectorAll('.en-content').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.zh-content').forEach(el => el.style.display = 'block');
+            document.querySelector('.lang-btn:nth-child(2)').classList.add('active');
+            document.querySelector('.lang-btn:nth-child(1)').classList.remove('active');
         }
     </script>
 </body>
