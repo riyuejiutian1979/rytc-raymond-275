@@ -3,709 +3,357 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAYC Global Ecology Token - Official White Paper</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/v4-shims.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'cyber-cyan': '#00F5FF',
-                        'cyber-purple': '#7928CA',
-                        'dark-bg': '#0A0A1A',
-                        'card-bg': 'rgba(255, 255, 255, 0.05)',
-                        'border-glow': 'rgba(0, 245, 255, 0.2)',
-                    },
-                    fontFamily: {
-                        'orbitron': ['Orbitron', 'sans-serif'],
-                        'roboto': ['Roboto', 'sans-serif'],
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'glow': 'glow 2s ease-in-out infinite alternate',
-                        'slide-up': 'slideUp 0.8s ease-out',
-                    }
-                }
-            }
+    <title>RAYC - Raymond Global Ecology Token Whitepaper</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .text-gradient {
-                background: linear-gradient(135deg, #00F5FF, #7928CA);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-            }
-            .bg-glass {
-                background: rgba(255, 255, 255, 0.05);
-                backdrop-filter: blur(10px);
-            }
-            .border-glow {
-                border: 1px solid rgba(0, 245, 255, 0.2);
-                box-shadow: 0 0 20px rgba(0, 245, 255, 0.1);
-            }
+        body {
+            background: linear-gradient(135deg, #0a0e17 0%, #1a1f35 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
         }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
-        
-        @keyframes glow {
-            from { box-shadow: 0 0 20px rgba(0, 245, 255, 0.2); }
-            to { box-shadow: 0 0 30px rgba(0, 245, 255, 0.4), 0 0 40px rgba(121, 40, 202, 0.2); }
-        }
-        
-        @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .background-animation {
+        .lang-switch {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(121, 40, 202, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0, 245, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(255, 0, 150, 0.1) 0%, transparent 50%);
-            z-index: -1;
-            animation: backgroundShift 20s ease-in-out infinite alternate;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
         }
-        
-        @keyframes backgroundShift {
-            0% { transform: scale(1) translate(0, 0); }
-            100% { transform: scale(1.1) translate(10px, -10px); }
+        .lang-btn {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
         }
-        
-        .section-fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+        .lang-btn.active {
+            background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+            box-shadow: 0 0 15px rgba(106, 17, 203, 0.5);
         }
-        
-        .section-fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+        .logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            background: url('https://i.imgs.ovh/2026/06/13/bf8fec7566045bfadb50d371495cffe7.png') center/cover no-repeat;
+            border-radius: 50%;
+            border: 3px solid #6a11cb;
+            box-shadow: 0 0 30px rgba(106, 17, 203, 0.3);
+        }
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+        .section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 4px solid #6a11cb;
+        }
+        .section h2 {
+            color: #4ecdc4;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        .token-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .info-card {
+            background: rgba(255,255,255,0.08);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(106, 17, 203, 0.3);
+        }
+        .info-card h3 {
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+        .contract-address {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            word-break: break-all;
+            margin-top: 10px;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.08);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(78, 205, 196, 0.2);
+        }
+        .feature-card h3 {
+            color: #4ecdc4;
+            margin-bottom: 15px;
+        }
+        .mining-section {
+            background: linear-gradient(135deg, rgba(106, 17, 203, 0.1), rgba(37, 117, 252, 0.1));
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+        .mining-card {
+            background: rgba(255,255,255,0.08);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 3px solid #ff6b6b;
+        }
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+        .lang-content {
+            display: none;
+        }
+        .lang-content.active {
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .lang-switch {
+                top: 10px;
+                right: 10px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .container {
+                padding: 10px;
+            }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-dark-bg text-white font-roboto">
-    <div class="background-animation"></div>
+<body>
+    <div class="lang-switch">
+        <button class="lang-btn active" onclick="switchLang('en')">English</button>
+        <button class="lang-btn" onclick="switchLang('zh')">中文</button>
+    </div>
 
-    <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center relative overflow-hidden">
-        <div class="text-center z-10 px-4">
-            <h1 class="text-6xl md:text-8xl font-orbitron font-black text-gradient mb-6 animate-slide-up">
-                RAYC
-            </h1>
-            <h2 class="text-2xl md:text-4xl font-orbitron text-cyber-cyan mb-8 animate-slide-up" style="animation-delay: 0.2s;">
-                GLOBAL ECOLOGY TOKEN
-            </h2>
-            <p class="text-xl text-gray-300 max-w-2xl mx-auto animate-slide-up" style="animation-delay: 0.4s;">
-                Official White Paper | 2026
-            </p>
-            <div class="mt-12 animate-slide-up" style="animation-delay: 0.6s;">
-                <a href="#disclaimer" class="bg-cyber-cyan text-dark-bg px-8 py-4 rounded-full font-orbitron font-bold text-lg hover:bg-cyan-400 transition-all duration-300 animate-glow">
-                    <i class="fas fa-arrow-down mr-2"></i>
-                    EXPLORE
-                </a>
-            </div>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo"></div>
+            <h1>RAYC</h1>
+            <div class="subtitle lang-content active" id="en-subtitle">Raymond Global Ecology Token Whitepaper</div>
+            <div class="subtitle lang-content" id="zh-subtitle">雷蒙德全球生态通证 白皮书</div>
         </div>
-        
-        <!-- Floating Elements -->
-        <div class="absolute top-20 left-10 w-32 h-32 bg-cyber-purple/20 rounded-full blur-xl animate-float"></div>
-        <div class="absolute bottom-20 right-10 w-24 h-24 bg-cyber-cyan/20 rounded-full blur-xl animate-float" style="animation-delay: 2s;"></div>
-        <div class="absolute top-1/2 left-1/4 w-16 h-16 bg-cyber-purple/30 rounded-full blur-lg animate-float" style="animation-delay: 4s;"></div>
-    </section>
 
-    <!-- Disclaimer Section -->
-    <section id="disclaimer" class="py-20 relative">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="bg-glass border-glow rounded-2xl p-8 mb-12 section-fade-in">
-                <h2 class="text-3xl font-orbitron text-cyber-cyan mb-6 flex items-center">
-                    <i class="fas fa-exclamation-triangle mr-4"></i>
-                    DISCLAIMER
-                </h2>
-                <div class="text-gray-300 space-y-4">
-                    <p>This white paper is for global overseas users only.</p>
-                    <p>The project does not promote or conduct any business within mainland China, and does not constitute any investment advice.</p>
-                    <p>The project abides by the regulatory rules of Singapore MAS, Dubai VASP and global Web3 compliance standards.</p>
-                    <p class="font-bold text-cyber-cyan">Digital assets carry market risks, and all participants shall bear their own risks.</p>
+        <!-- Token Overview -->
+        <div class="section">
+            <h2 class="lang-content active" id="en-overview-title">Token Overview</h2>
+            <h2 class="lang-content" id="zh-overview-title">代币概览</h2>
+            
+            <div class="token-info">
+                <div class="info-card">
+                    <h3 class="lang-content active" id="en-fullname">Full Name</h3>
+                    <h3 class="lang-content" id="zh-fullname">全称</h3>
+                    <p>Raymond Global Ecology Token</p>
+                </div>
+                <div class="info-card">
+                    <h3>Symbol</h3>
+                    <p>RAYC</p>
+                </div>
+                <div class="info-card">
+                    <h3 class="lang-content active" id="en-chain">Blockchain</h3>
+                    <h3 class="lang-content" id="zh-chain">公链</h3>
+                    <p>Polygon (Matic)</p>
+                </div>
+                <div class="info-card">
+                    <h3 class="lang-content active" id="en-supply">Total Supply</h3>
+                    <h3 class="lang-content" id="zh-supply">总供应量</h3>
+                    <p>275,000,000 RAYC</p>
                 </div>
             </div>
 
-            <!-- Table of Contents -->
-            <div class="bg-glass border-glow rounded-2xl p-8 section-fade-in">
-                <h2 class="text-3xl font-orbitron text-cyber-cyan mb-6">CONTENTS</h2>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="space-y-4">
-                        <a href="#overview" class="block text-gray-300 hover:text-cyber-cyan transition-colors">
-                            <span class="text-cyber-cyan font-orbitron mr-3">01</span>Project Overview
-                        </a>
-                        <a href="#background" class="block text-gray-300 hover:text-cyber-cyan transition-colors">
-                            <span class="text-cyber-cyan font-orbitron mr-3">02</span>Corporate & Technical Background
-                        </a>
-                        <a href="#tokenomics" class="block text-gray-300 hover:text-cyber-cyan transition-colors">
-                            <span class="text-cyber-cyan font-orbitron mr-3">03</span>Token Economics
-                        </a>
-                        <a href="#defi-ecology" class="block text-gray-300 hover:text-cyber-cyan transition-colors">
-                            <span class="text-cyber-cyan font-orbitron mr-3">04</span>On-Chain DeFi Core Ecology
-                        </a>
-                    </div>
-                    <div class="space-y-4">
-                        <a href="#real-economy" class="block text-gray-300 hover:text-cyber-cyan transition-colors">
-                            <span class="text-cyber-cyan font-orbitron mr-3">05</span>Global Real Economy Application Scenarios
-                        </a>
-                        <a href="#architecture" class="block text-gray-300 hover:text-cyber-cyan transition-colors">
-                            <span class="text-cyber-cyan font-orbitron mr-3">06</span>Dual-Server & Dual-Domain DApp Architecture
-                        </a>
-                        <a href="#roadmap" class="block text-gray-300 hover:text-cyber-cyan transition-colors">
-                            <span class="text-cyber-cyan font-orbitron mr-3">07</span>Roadmap
-                        </a>
-                        <a href="#summary" class="block text-gray-300 hover:text-cyber-cyan transition-colors">
-                            <span class="text-cyber-cyan font-orbitron mr-3">08</span>Project Summary
-                        </a>
-                    </div>
+            <div class="info-card" style="margin-top:20px;">
+                <h3 class="lang-content active" id="en-contract">Contract Address</h3>
+                <h3 class="lang-content" id="zh-contract">合约地址</h3>
+                <div class="contract-address">0x00264cf668b959f87998f54e239d2e93d42a5fc3</div>
+            </div>
+        </div>
+
+        <!-- Why Polygon -->
+        <div class="section">
+            <h2 class="lang-content active" id="en-polygon-title">Why Polygon?</h2>
+            <h2 class="lang-content" id="zh-polygon-title">为什么选择Polygon链？</h2>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <h3 class="lang-content active" id="en-polygon1">Low Gas Fees</h3>
+                    <h3 class="lang-content" id="zh-polygon1">极低Gas费用</h3>
+                    <p class="lang-content active" id="en-polygon1-desc">Polygon offers near-zero transaction costs, making it ideal for high-frequency gaming and social interactions without burdening users.</p>
+                    <p class="lang-content" id="zh-polygon1-desc">Polygon链提供近乎为零的交易成本，非常适合高频游戏和社交互动，不会给用户带来Gas负担。</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="lang-content active" id="en-polygon2">High Performance</h3>
+                    <h3 class="lang-content" id="zh-polygon2">高性能与可扩展性</h3>
+                    <p class="lang-content active" id="en-polygon2-desc">Polygon supports thousands of transactions per second, ensuring smooth gameplay and real-time social interactions.</p>
+                    <p class="lang-content" id="zh-polygon2-desc">Polygon每秒可处理数千笔交易，保障流畅的游戏体验和实时社交互动。</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="lang-content active" id="en-polygon3">EVM Compatibility</h3>
+                    <h3 class="lang-content" id="zh-polygon3">EVM完全兼容</h3>
+                    <p class="lang-content active" id="en-polygon3-desc">Fully compatible with Ethereum Virtual Machine, enabling easy deployment of smart contracts and integration with existing tools.</p>
+                    <p class="lang-content" id="zh-polygon3-desc">与以太坊虚拟机完全兼容，便于智能合约部署和现有工具集成。</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="lang-content active" id="en-polygon4">Strong Security</h3>
+                    <h3 class="lang-content" id="zh-polygon4">安全可靠</h3>
+                    <p class="lang-content active" id="en-polygon4-desc">Built on Ethereum's security foundation with robust validator network, ensuring the safety of user assets and transactions.</p>
+                    <p class="lang-content" id="zh-polygon4-desc">基于以太坊安全基础构建，拥有强大的验证节点网络，保障用户资产和交易安全。</p>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Project Overview -->
-    <section id="overview" class="py-20">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="section-fade-in">
-                <h2 class="text-4xl font-orbitron text-cyber-cyan mb-8 flex items-center">
-                    <span class="text-6xl mr-4 opacity-50">01</span>Project Overview
-                </h2>
-                <div class="bg-glass border-glow rounded-2xl p-8">
-                    <p class="text-gray-300 mb-6 leading-relaxed">
-                        RAYC is a decentralized ecological token developed by BlockTech Global Singapore team based on Polygon (Ethereum Layer2).
-                    </p>
-                    <div class="grid md:grid-cols-2 gap-8 mb-6">
-                        <div class="text-center p-6 bg-card-bg rounded-xl">
-                            <i class="fas fa-link text-4xl text-cyber-cyan mb-4"></i>
-                            <h3 class="text-xl font-orbitron text-white mb-2">Dual Closed-Loop System</h3>
-                            <p class="text-gray-400">On-chain DeFi financial ecology + Global physical commercial payment</p>
-                        </div>
-                        <div class="text-center p-6 bg-card-bg rounded-xl">
-                            <i class="fas fa-globe text-4xl text-cyber-purple mb-4"></i>
-                            <h3 class="text-xl font-orbitron text-white mb-2">Real Economy Implementation</h3>
-                            <p class="text-gray-400">Deeply implemented in global real economy scenarios, realizing sustainable and valuable global Web3 business ecology.</p>
-                        </div>
-                    </div>
+        <!-- Raymond Family -->
+        <div class="section">
+            <h2 class="lang-content active" id="en-family-title">Raymond Family</h2>
+            <h2 class="lang-content" id="zh-family-title">雷蒙德家族</h2>
+            
+            <p class="lang-content active" id="en-family-desc">The Raymond Family is the core governance and development entity behind the RAYC ecosystem. Rooted in the spirit of community collaboration and shared prosperity, the family is committed to building a sustainable Web3 leisure ecosystem centered around the RAYC token. Through transparent governance and community-driven development, we aim to create a platform where every member can participate, contribute, and benefit together.</p>
+            <p class="lang-content" id="zh-family-desc">雷蒙德家族是RAYC生态背后的核心治理与开发主体。秉持社区协作与共享繁荣的精神，家族致力于构建以RAYC通证为核心的可持续Web3休闲生态。通过透明治理与社区驱动的发展，我们旨在打造一个每个成员都能参与、贡献、共同受益的平台。</p>
+        </div>
+
+        <!-- Mining System -->
+        <div class="section">
+            <h2 class="lang-content active" id="en-mining-title">Cloud Mining System</h2>
+            <h2 class="lang-content" id="zh-mining-title">云挖矿体系</h2>
+            
+            <div class="mining-section">
+                <div class="mining-card">
+                    <h3 class="lang-content active" id="en-mining1">Game Mining</h3>
+                    <h3 class="lang-content" id="zh-mining1">游戏挖矿</h3>
+                    <p class="lang-content active" id="en-mining1-desc">Earn RAYC tokens through daily gameplay in our social farming game. Plant crops, harvest produce, complete tasks, and interact with friends to accumulate mining rewards.</p>
+                    <p class="lang-content" id="zh-mining1-desc">通过我们的社交农场游戏日常玩法赚取RAYC代币。种植作物、收割收获、完成任务、与朋友互动，累积挖矿奖励。</p>
+                </div>
+                <div class="mining-card">
+                    <h3 class="lang-content active" id="en-mining2">Liquidity Mining</h3>
+                    <h3 class="lang-content" id="zh-mining2">流动性挖矿</h3>
+                    <p class="lang-content active" id="en-mining2-desc">Provide liquidity to RAYC/USDC pools on Polygon DEX platforms and earn additional RAYC rewards through staking LP tokens.</p>
+                    <p class="lang-content" id="zh-mining2-desc">在Polygon去中心化交易所平台为RAYC/USDC交易池提供流动性，通过质押LP代币赚取额外RAYC奖励。</p>
+                </div>
+                <div class="mining-card">
+                    <h3 class="lang-content active" id="en-mining3">Contribution Mining</h3>
+                    <h3 class="lang-content" id="zh-mining3">贡献挖矿</h3>
+                    <p class="lang-content active" id="en-mining3-desc">Earn mining weight through community contributions, referrals, content creation, and ecosystem promotion. More active participation leads to higher mining efficiency.</p>
+                    <p class="lang-content" id="zh-mining3-desc">通过社区贡献、推荐拉新、内容创作和生态推广获得挖矿权重。参与越活跃，挖矿效率越高。</p>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Corporate & Technical Background -->
-    <section id="background" class="py-20">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="section-fade-in">
-                <h2 class="text-4xl font-orbitron text-cyber-cyan mb-8 flex items-center">
-                    <span class="text-6xl mr-4 opacity-50">02</span>Corporate & Technical Background
-                </h2>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <!-- Operating Company -->
-                    <div class="bg-glass border-glow rounded-2xl p-8">
-                        <h3 class="text-2xl font-orbitron text-white mb-6">2.1 Operating Company</h3>
-                        <h4 class="text-xl font-orbitron text-cyber-cyan mb-4">BlockTech Global Pte. Ltd. (Singapore)</h4>
-                        <ul class="text-gray-300 space-y-3">
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-cyber-cyan mr-3 mt-1"></i>
-                                Founded in 2018, focus on underlying blockchain development, smart contract audit, real economy blockchain transformation
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-certificate text-cyber-cyan mr-3 mt-1"></i>
-                                Licensed by Singapore MAS and Dubai VASP
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-users text-cyber-cyan mr-3 mt-1"></i>
-                                Core team from Polygon Labs, Ethereum Foundation and global blockchain security institutions
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-exchange-alt text-cyber-cyan mr-3 mt-1"></i>
-                                Provide decentralized payment, custom smart contract and cross-border settlement services
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Polygon Core Advantages -->
-                    <div class="bg-glass border-glow rounded-2xl p-8">
-                        <h3 class="text-2xl font-orbitron text-white mb-6">2.2 Polygon Core Advantages</h3>
-                        <ul class="text-gray-300 space-y-3">
-                            <li class="flex items-start">
-                                <i class="fas fa-bolt text-cyber-cyan mr-3 mt-1"></i>
-                                Fast transaction: 2–3s block confirmation
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-coins text-cyber-cyan mr-3 mt-1"></i>
-                                Near-zero gas fee, low threshold for global users
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-shield-alt text-cyber-cyan mr-3 mt-1"></i>
-                                Inherit Ethereum top-level security, immutable on-chain data
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-code text-cyber-cyan mr-3 mt-1"></i>
-                                Full EVM compatibility, support all DeFi and DApp protocols
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-server text-cyber-cyan mr-3 mt-1"></i>
-                                Multi-server & multi-domain synchronous deployment, unified on-chain data
-                            </li>
-                        </ul>
-                    </div>
+        <!-- Ecosystem Applications -->
+        <div class="section">
+            <h2 class="lang-content active" id="en-ecosystem-title">Ecosystem Applications</h2>
+            <h2 class="lang-content" id="zh-ecosystem-title">生态应用场景</h2>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <h3 class="lang-content active" id="en-eco1">Social Farming Game</h3>
+                    <h3 class="lang-content" id="zh-eco1">社交农场游戏</h3>
+                    <p class="lang-content active" id="en-eco1-desc">Our flagship casual farming game combines planting, harvesting, trading, and social interaction, with RAYC as the primary in-game currency.</p>
+                    <p class="lang-content" id="zh-eco1-desc">我们的旗舰休闲农场游戏融合种植、收割、交易和社交互动，RAYC作为游戏内主要流通货币。</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="lang-content active" id="en-eco2">NFT Asset System</h3>
+                    <h3 class="lang-content" id="zh-eco2">NFT资产体系</h3>
+                    <p class="lang-content active" id="en-eco2-desc">Land NFTs, crop NFTs, and decorative assets are all traded using RAYC, providing true ownership and collectible value.</p>
+                    <p class="lang-content" id="zh-eco2-desc">土地NFT、作物NFT和装饰资产均使用RAYC交易，提供真正的所有权和收藏价值。</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="lang-content active" id="en-eco3">DAO Governance</h3>
+                    <h3 class="lang-content" id="zh-eco3">DAO治理</h3>
+                    <p class="lang-content active" id="en-eco3-desc">RAYC holders participate in ecosystem governance, voting on proposals, treasury management, and future development plans.</p>
+                    <p class="lang-content" id="zh-eco3-desc">RAYC持有者参与生态治理，对提案、国库管理和未来发展计划进行投票。</p>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Token Economics -->
-    <section id="tokenomics" class="py-20">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="section-fade-in">
-                <h2 class="text-4xl font-orbitron text-cyber-cyan mb-8 flex items-center">
-                    <span class="text-6xl mr-4 opacity-50">03</span>Token Economics
-                </h2>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <!-- Basic Token Info -->
-                    <div class="bg-glass border-glow rounded-2xl p-8">
-                        <h3 class="text-2xl font-orbitron text-white mb-6">3.1 Basic Token Info</h3>
-                        <div class="space-y-4">
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Full Name:</span>
-                                <span class="text-white font-bold">RAYC Global Ecology Token</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Symbol:</span>
-                                <span class="text-white font-bold text-cyber-cyan">RAYC</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Blockchain:</span>
-                                <span class="text-white font-bold">Polygon (Matic)</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Total Supply:</span>
-                                <span class="text-white font-bold">275,000,000</span>
-                            </div>
-                            <div class="pt-4 border-t border-gray-700">
-                                <p class="text-gray-300">
-                                    <span class="text-cyber-cyan font-bold">Rule:</span> 
-                                    No private sale, no pre-mine, no team allocation, no manual mint, 
-                                    <span class="text-cyber-cyan font-bold">100% on-chain ecological output</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Output & Burn -->
-                    <div class="space-y-6">
-                        <!-- Output Sources -->
-                        <div class="bg-glass border-glow rounded-2xl p-8">
-                            <h3 class="text-xl font-orbitron text-white mb-4">3.2 Output Sources</h3>
-                            <ol class="text-gray-300 space-y-2 list-decimal list-inside">
-                                <li>Multi-cycle staking mining</li>
-                                <li>Holding daily interest income</li>
-                                <li>Global two-level referral reward</li>
-                                <li>200 global DAO guild dividend pool</li>
-                            </ol>
-                        </div>
-
-                        <!-- Deflation & Burn -->
-                        <div class="bg-glass border-glow rounded-2xl p-8">
-                            <h3 class="text-xl font-orbitron text-white mb-4">3.3 Deflation & Burn Mechanism</h3>
-                            <p class="text-gray-300">
-                                On-chain transfer and offline physical consumption will trigger automatic token burn. 
-                                Larger real economy scale brings higher burn volume, reducing circulating supply and promoting long-term value growth.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Vision -->
+        <div class="section">
+            <h2 class="lang-content active" id="en-vision-title">Vision & Mission</h2>
+            <h2 class="lang-content" id="zh-vision-title">愿景与使命</h2>
+            
+            <p class="lang-content active" id="en-vision-desc">RAYC aims to become the leading "social gaming + DeFi" ecosystem on Polygon, building a sustainable Web3 leisure empire accessible to everyone. Our mission is to make blockchain simple, fun, and beneficial, connecting games, social interactions, assets, and value through RAYC.</p>
+            <p class="lang-content" id="zh-vision-desc">RAYC致力于成为Polygon链上领先的“社交游戏+DeFi”生态，打造人人可参与的可持续Web3休闲帝国。我们的使命是让区块链变得简单、有趣、有益，通过RAYC连接游戏、社交互动、资产和价值。</p>
         </div>
-    </section>
 
-    <!-- On-Chain DeFi Core Ecology -->
-    <section id="defi-ecology" class="py-20">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="section-fade-in">
-                <h2 class="text-4xl font-orbitron text-cyber-cyan mb-8 flex items-center">
-                    <span class="text-6xl mr-4 opacity-50">04</span>On-Chain DeFi Core Ecology
-                </h2>
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="bg-glass border-glow rounded-xl p-6 text-center">
-                        <i class="fas fa-hand-holding-usd text-3xl text-cyber-cyan mb-4"></i>
-                        <h3 class="text-lg font-orbitron text-white mb-3">4.1 Holding Interest</h3>
-                        <p class="text-gray-400 text-sm">Users gain daily automatic on-chain rewards by holding RAYC, compound interest growth without manual intervention.</p>
-                    </div>
-                    <div class="bg-glass border-glow rounded-xl p-6 text-center">
-                        <i class="fas fa-chart-line text-3xl text-cyber-cyan mb-4"></i>
-                        <h3 class="text-lg font-orbitron text-white mb-3">4.2 Multi-Cycle Staking</h3>
-                        <p class="text-gray-400 text-sm">Multiple lock-up cycles with increasing mining yield ratios. All rewards are automatically distributed by smart contracts.</p>
-                    </div>
-                    <div class="bg-glass border-glow rounded-xl p-6 text-center">
-                        <i class="fas fa-network-wired text-3xl text-cyber-cyan mb-4"></i>
-                        <h3 class="text-lg font-orbitron text-white mb-3">4.3 Global Referral</h3>
-                        <p class="text-gray-400 text-sm">Primary direct referral reward & secondary team reward, auto on-chain distribution, fair and transparent.</p>
-                    </div>
-                    <div class="bg-glass border-glow rounded-xl p-6 text-center">
-                        <i class="fas fa-users-cog text-3xl text-cyber-cyan mb-4"></i>
-                        <h3 class="text-lg font-orbitron text-white mb-3">4.4 DAO Guild System</h3>
-                        <p class="text-gray-400 text-sm">200 standardized autonomous business guilds worldwide, building a global distributed commercial alliance.</p>
-                    </div>
-                </div>
-            </div>
+        <!-- Footer -->
+        <div class="footer">
+            <p class="lang-content active" id="en-footer">© 2026 Raymond Family. All rights reserved.</p>
+            <p class="lang-content" id="zh-footer">© 2026 雷蒙德家族. 保留所有权利.</p>
         </div>
-    </section>
-
-    <!-- Global Real Economy Application Scenarios -->
-    <section id="real-economy" class="py-20">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="section-fade-in">
-                <h2 class="text-4xl font-orbitron text-cyber-cyan mb-8 flex items-center">
-                    <span class="text-6xl mr-4 opacity-50">05</span>Global Real Economy Application Scenarios
-                </h2>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-glass border-glow rounded-xl p-6">
-                        <i class="fas fa-industry text-2xl text-cyber-purple mb-4"></i>
-                        <h3 class="text-lg font-orbitron text-white mb-3">5.1 Refining & Energy</h3>
-                        <ul class="text-gray-400 text-sm space-y-1">
-                            <li>• Cross-border refined oil settlement</li>
-                            <li>• Petrochemical supply chain payment</li>
-                            <li>• Energy enterprise value asset storage</li>
-                        </ul>
-                    </div>
-                    <div class="bg-glass border-glow rounded-xl p-6">
-                        <i class="fas fa-hotel text-2xl text-cyber-purple mb-4"></i>
-                        <h3 class="text-lg font-orbitron text-white mb-3">5.2 Star Hotels</h3>
-                        <ul class="text-gray-400 text-sm space-y-1">
-                            <li>• Direct payment for hotel room fees</li>
-                            <li>• Hotel membership recharge</li>
-                            <li>• Cross-region universal settlement</li>
-                        </ul>
-                    </div>
-                    <div class="bg-glass border-glow rounded-xl p-6">
-                        <i class="fas fa-shopping-cart text-2xl text-cyber-purple mb-4"></i>
-                        <h3 class="text-lg font-orbitron text-white mb-3">5.3 Supermarkets & Retail</h3>
-                        <ul class="text-gray-400 text-sm space-y-1">
-                            <li>• Daily necessities offline payment</li>
-                            <li>• Cross-border imported goods</li>
-                            <li>• Convenience store universal deduction</li>
-                        </ul>
-                    </div>
-                    <div class="bg-glass border-glow rounded-xl p-6">
-                        <i class="fas fa-golf-ball text-2xl text-cyber-purple mb-4"></i>
-                        <h3 class="text-lg font-orbitron text-white mb-3">5.4 Golf & Private Clubs</h3>
-                        <ul class="text-gray-400 text-sm space-y-1">
-                            <li>• Golf annual membership</li>
-                            <li>• Elite private club settlement</li>
-                            <li>• High-end circle exclusive token</li>
-                        </ul>
-                    </div>
-                    <div class="bg-glass border-glow rounded-xl p-6">
-                        <i class="fas fa-theater-masks text-2xl text-cyber-purple mb-4"></i>
-                        <h3 class="text-lg font-orbitron text-white mb-3">5.5 Entertainment & Tourism</h3>
-                        <ul class="text-gray-400 text-sm space-y-1">
-                            <li>• Compliant entertainment centers</li>
-                            <li>• Scenic spot tickets</li>
-                            <li>• Theme park universal payment</li>
-                        </ul>
-                    </div>
-                    <div class="bg-glass border-glow rounded-xl p-6">
-                        <i class="fas fa-ship text-2xl text-cyber-purple mb-4"></i>
-                        <h3 class="text-lg font-orbitron text-white mb-3">5.6 Global Cross-Border Trade</h3>
-                        <ul class="text-gray-400 text-sm space-y-1">
-                            <li>• International trade payment</li>
-                            <li>• Global logistics & warehouse</li>
-                            <li>• Merchant reserve digital assets</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- DApp Architecture -->
-    <section id="architecture" class="py-20">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="section-fade-in">
-                <h2 class="text-4xl font-orbitron text-cyber-cyan mb-8 flex items-center">
-                    <span class="text-6xl mr-4 opacity-50">06</span>Dual-Server & Dual-Domain DApp Architecture
-                </h2>
-                <div class="bg-glass border-glow rounded-2xl p-8">
-                    <p class="text-gray-300 mb-8 text-center text-lg">
-                        To ensure permanent stable global access: 
-                        <span class="text-cyber-cyan font-bold">Two independent overseas high-defense servers + Two independent top-level domains</span>
-                    </p>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div class="text-center">
-                            <div class="bg-card-bg rounded-xl p-6 mb-4">
-                                <i class="fas fa-server text-4xl text-cyber-cyan mb-4"></i>
-                                <h3 class="text-xl font-orbitron text-white">Server Architecture</h3>
-                            </div>
-                            <ul class="text-gray-300 space-y-2">
-                                <li>• Same on-chain contracts</li>
-                                <li>• Real-time synchronous data</li>
-                                <li>• Automatic backup access</li>
-                                <li>• Avoid domain blocking risk</li>
-                            </ul>
-                        </div>
-                        <div class="text-center">
-                            <div class="bg-card-bg rounded-xl p-6 mb-4">
-                                <i class="fas fa-globe text-4xl text-cyber-purple mb-4"></i>
-                                <h3 class="text-xl font-orbitron text-white">Global Operation</h3>
-                            </div>
-                            <ul class="text-gray-300 space-y-2">
-                                <li>• Contract parameter modification</li>
-                                <li>• Takes effect globally on-chain</li>
-                                <li>• Avoid server failure risk</li>
-                                <li>• Permanent stable operation</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Roadmap -->
-    <section id="roadmap" class="py-20">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="section-fade-in">
-                <h2 class="text-4xl font-orbitron text-cyber-cyan mb-8 flex items-center">
-                    <span class="text-6xl mr-4 opacity-50">07</span>Roadmap
-                </h2>
-                <div class="relative">
-                    <!-- Timeline Line -->
-                    <div class="absolute left-4 top-0 bottom-0 w-1 bg-cyber-purple/30 hidden md:block"></div>
-                    
-                    <div class="space-y-8">
-                        <!-- 2026 Q2 -->
-                        <div class="flex md:items-center">
-                            <div class="md:w-1/4 mb-4 md:mb-0">
-                                <div class="bg-cyber-cyan text-dark-bg font-orbitron font-bold rounded-lg px-4 py-2 text-center">
-                                    2026 Q2
-                                </div>
-                                <div class="text-gray-400 text-sm mt-2">Technical Completion</div>
-                            </div>
-                            <div class="md:w-3/4">
-                                <div class="bg-glass border-glow rounded-xl p-6">
-                                    <ul class="text-gray-300 space-y-2">
-                                        <li>• Complete Polygon smart contract deployment & professional security audit</li>
-                                        <li>• Dual-server dual-domain DApp official launch</li>
-                                        <li>• Establish 200 global DAO guild system</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 2026 Q3 -->
-                        <div class="flex md:items-center">
-                            <div class="md:w-1/4 mb-4 md:mb-0">
-                                <div class="bg-cyber-cyan text-dark-bg font-orbitron font-bold rounded-lg px-4 py-2 text-center">
-                                    2026 Q3
-                                </div>
-                                <div class="text-gray-400 text-sm mt-2">Ecology Launch</div>
-                            </div>
-                            <div class="md:w-3/4">
-                                <div class="bg-glass border-glow rounded-xl p-6">
-                                    <ul class="text-gray-300 space-y-2">
-                                        <li>• Open holding interest & multi-cycle staking mining</li>
-                                        <li>• Launch global two-level referral system</li>
-                                        <li>• Access first batch of overseas hotels, supermarkets and entertainment scenarios</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 2026 Q4 -->
-                        <div class="flex md:items-center">
-                            <div class="md:w-1/4 mb-4 md:mb-0">
-                                <div class="bg-cyber-cyan text-dark-bg font-orbitron font-bold rounded-lg px-4 py-2 text-center">
-                                    2026 Q4
-                                </div>
-                                <div class="text-gray-400 text-sm mt-2">Large-Scale Physical Implementation</div>
-                            </div>
-                            <div class="md:w-3/4">
-                                <div class="bg-glass border-glow rounded-xl p-6">
-                                    <ul class="text-gray-300 space-y-2">
-                                        <li>• Complete energy refining industry scenario access</li>
-                                        <li>• Launch high-end golf & private club ecology</li>
-                                        <li>• List on international decentralized exchanges</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 2027 -->
-                        <div class="flex md:items-center">
-                            <div class="md:w-1/4 mb-4 md:mb-0">
-                                <div class="bg-cyber-purple text-white font-orbitron font-bold rounded-lg px-4 py-2 text-center">
-                                    2027
-                                </div>
-                                <div class="text-gray-400 text-sm mt-2">Global Business Expansion</div>
-                            </div>
-                            <div class="md:w-3/4">
-                                <div class="bg-glass border-glow rounded-xl p-6">
-                                    <ul class="text-gray-300 space-y-2">
-                                        <li>• More than 100 global physical enterprises access RAYC payment system</li>
-                                        <li>• Complete full-scene closed-loop of energy/hotel/supermarket/golf/entertainment/trade</li>
-                                        <li>• Become top physical ecological token on Polygon chain</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Project Summary -->
-    <section id="summary" class="py-20">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="section-fade-in">
-                <h2 class="text-4xl font-orbitron text-cyber-cyan mb-8 flex items-center">
-                    <span class="text-6xl mr-4 opacity-50">08</span>Project Summary
-                </h2>
-                <div class="bg-glass border-glow rounded-2xl p-8 text-center">
-                    <div class="mb-8">
-                        <i class="fas fa-shield-check text-6xl text-cyber-cyan mb-4"></i>
-                        <h3 class="text-2xl font-orbitron text-white mb-4">Supported by Singapore compliant blockchain company</h3>
-                        <h3 class="text-2xl font-orbitron text-white mb-4">Polygon underlying technology</h3>
-                        <h3 class="text-2xl font-orbitron text-white mb-4">fully decentralized on-chain contracts</h3>
-                        <h3 class="text-2xl font-orbitron text-white mb-6">and massive global physical application scenarios</h3>
-                    </div>
-                    
-                    <div class="grid md:grid-cols-2 gap-8 mb-8">
-                        <div class="bg-card-bg rounded-xl p-6">
-                            <h4 class="text-xl font-orbitron text-cyber-cyan mb-2">On-chain financial value creation</h4>
-                        </div>
-                        <div class="bg-card-bg rounded-xl p-6">
-                            <h4 class="text-xl font-orbitron text-cyber-purple mb-2">Offline physical value support</h4>
-                        </div>
-                    </div>
-                    
-                    <p class="text-xl text-gray-300 italic">
-                        "Build a safe, stable, permanent and valuable new-generation global Web3 ecological token."
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-12 border-t border-gray-800">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <p class="text-gray-400">
-                © 2026 BlockTech Global Pte. Ltd. All rights reserved.
-            </p>
-            <p class="text-gray-600 text-sm mt-2">
-                This white paper is for informational purposes only and does not constitute investment advice.
-            </p>
-        </div>
-    </footer>
-
-    <!-- Back to Top Button -->
-    <button id="backToTop" class="fixed bottom-8 right-8 bg-cyber-cyan text-dark-bg w-12 h-12 rounded-full shadow-lg hover:bg-cyan-400 transition-all duration-300 opacity-0 invisible">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+    </div>
 
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.section-fade-in').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Back to top button
-        const backToTopBtn = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.classList.remove('opacity-0', 'invisible');
-                backToTopBtn.classList.add('opacity-100', 'visible');
-            } else {
-                backToTopBtn.classList.add('opacity-0', 'invisible');
-                backToTopBtn.classList.remove('opacity-100', 'visible');
-            }
-        });
-
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Add floating animation to elements
-        function createFloatingElements() {
-            const container = document.body;
-            const colors = ['#00F5FF', '#7928CA', '#FF0099'];
+        function switchLang(lang) {
+            const enBtn = document.querySelector('.lang-btn:first-child');
+            const zhBtn = document.querySelector('.lang-btn:last-child');
             
-            for (let i = 0; i < 10; i++) {
-                const element = document.createElement('div');
-                element.style.position = 'fixed';
-                element.style.width = Math.random() * 100 + 20 + 'px';
-                element.style.height = element.style.width;
-                element.style.background = colors[Math.floor(Math.random() * colors.length)] + '20';
-                element.style.borderRadius = '50%';
-                element.style.filter = 'blur(10px)';
-                element.style.left = Math.random() * 100 + '%';
-                element.style.top = Math.random() * 100 + '%';
-                element.style.zIndex = '-1';
-                element.style.animation = 'float ' + (Math.random() * 10 + 5) + 's ease-in-out infinite';
-                element.style.animationDelay = Math.random() * 5 + 's';
-                container.appendChild(element);
+            if(lang === 'en') {
+                enBtn.classList.add('active');
+                zhBtn.classList.remove('active');
+                document.querySelectorAll('.lang-content.active').forEach(el => {
+                    if(el.id.includes('zh')) el.classList.remove('active');
+                });
+                document.querySelectorAll('.lang-content').forEach(el => {
+                    if(el.id.includes('en')) el.classList.add('active');
+                });
+            } else {
+                zhBtn.classList.add('active');
+                enBtn.classList.remove('active');
+                document.querySelectorAll('.lang-content.active').forEach(el => {
+                    if(el.id.includes('en')) el.classList.remove('active');
+                });
+                document.querySelectorAll('.lang-content').forEach(el => {
+                    if(el.id.includes('zh')) el.classList.add('active');
+                });
             }
         }
-
-        // Initialize floating elements when page loads
-        window.addEventListener('load', createFloatingElements);
     </script>
 </body>
 </html>
